@@ -10,11 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+require __DIR__ . '/web/dashboard.php';
+require __DIR__ . '/web/backend_student.php';
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/test', function () {
+    return view ('backend.pages.test');
+});
+
+
