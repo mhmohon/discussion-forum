@@ -11,7 +11,6 @@
 
 <!-- Bootstrap Core Css -->
 <link href="{{ asset('css/plugins/bootstrap/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
-
 <!-- Waves Effect Css -->
 <link href="{{ asset('css/backend/plugins/node-waves/waves.css') }}" rel="stylesheet" />
 
@@ -23,6 +22,8 @@
 <link href="{{ asset('css/backend/plugins/morrisjs/morris.css') }}" rel="stylesheet" />
 
 @yield ('extra_css')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.77/theme-default.css"/>
 
 <!-- main Css -->
 <link href="{{ asset('css/backend/style.css') }}" rel="stylesheet">

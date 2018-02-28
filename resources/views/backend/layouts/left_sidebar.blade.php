@@ -4,7 +4,7 @@
     <!-- User Info -->
     <div class="user-info">
         <div class="image">
-            <img src="images/user.png" width="48" height="48" alt="User" />
+            <img src="{{ asset('photos/backend/user.png') }}" width="48" height="48" alt="User" />
         </div>
         <div class="info-container">
             <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
@@ -14,9 +14,7 @@
                 <ul class="dropdown-menu pull-right">
                     <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
                     <li role="seperator" class="divider"></li>
-                    <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                    <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                    <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
+                    
                     <li role="seperator" class="divider"></li>
                     <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
                 </ul>
@@ -28,25 +26,36 @@
     <div class="menu">
         <ul class="list">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active">
-                <a href="index.html">
+            <li class="{!! (Request::url() == route('home')) ? 'active' : '' !!}">
+                <a href="{{ route('home') }}">
                     <i class="material-icons">home</i>
                     <span>Home</span>
                 </a>
             </li>
-            <li>
-                <a href="pages/typography.html">
-                    <i class="material-icons">text_fields</i>
-                    <span>Typography</span>
-                </a>
-            </li>
 
-            <li>
-                <a href="pages/helper-classes.html">
-                    <i class="material-icons">layers</i>
-                    <span>Helper Classes</span>
+            <li class="{!! (Request::url() == route('addTopic') || Request::url() == route('viewTopic')) ? 'active' : '' !!}">
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">text_fields</i>
+                    <span>Topic</span>
                 </a>
+                <ul class="ml-menu">
+                    <li class="{!! (Request::url() == route('addTopic')) ? 'active' : '' !!}">
+                        <a href="{{ route('addTopic') }}">
+                            <span>Add New Topic</span>
+                        </a>
+                        
+                    </li>
+                    <li class="{!! (Request::url() == route('viewTopic')) ? 'active' : '' !!}">
+                        <a href="{{ route('viewTopic') }}">
+                            <span>View All Topic</span>
+                        </a>
+                        
+                    </li>
+                    
+                </ul>
             </li>
+            
+
             <li>
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">widgets</i>
@@ -59,28 +68,7 @@
                         </a>
                         
                     </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <span>Infobox</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="pages/widgets/infobox/infobox-1.html">Infobox-1</a>
-                            </li>
-                            <li>
-                                <a href="pages/widgets/infobox/infobox-2.html">Infobox-2</a>
-                            </li>
-                            <li>
-                                <a href="pages/widgets/infobox/infobox-3.html">Infobox-3</a>
-                            </li>
-                            <li>
-                                <a href="pages/widgets/infobox/infobox-4.html">Infobox-4</a>
-                            </li>
-                            <li>
-                                <a href="pages/widgets/infobox/infobox-5.html">Infobox-5</a>
-                            </li>
-                        </ul>
-                    </li>
+                    
                 </ul>
             </li>
             <li>

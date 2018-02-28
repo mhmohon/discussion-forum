@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Department;
+use App\Topic;
+use Carbon\Carbon;
 
-class StudentBackendController extends Controller
+class TopicController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,8 +25,8 @@ class StudentBackendController extends Controller
      */
     public function create()
     {   
-        $departments = Department::active()->pluck('name', 'id');
-        return view ('backend.pages.student.create_student', compact('departments'));
+        $title = 'Add new Topic';
+        return view ('backend.pages.topic.create_topic', compact('title'));
     }
 
     /**
@@ -36,7 +37,34 @@ class StudentBackendController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $this->validate(request(),[
+            'topic_title' => 'required|min:3',
+            'topic_des' => 'required|min:3',
+            'closure_date' => 'required',
+            'final_date' => 'required',
+            'status' => 'required',
+        ]);
+
+        $closure_date = Carbon::parse(request('closure_date'))->format('Y-m-d');
+
+       
+        $final_date = Carbon::parse(request('final_date'))->format('Y-m-d');
+
+        if($validate)
+        {
+            Topic::create([
+                'title' => request('topic_title'),
+                'description' => request('topic_des'),
+                'start_date' => Carbon::now(),
+                'closure_date' => $closure_date,
+                'final_date' => $final_date,
+                'status' => request('status')
+            ]);
+
+            return redirect()->back()->withMsgsuccess('Topic created successfully');
+        }else{
+            return redirect()->back()->withInput();
+        }
     }
 
     /**

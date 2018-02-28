@@ -10,12 +10,16 @@
 		@include('backend.layouts.partial._loader')
 		<!-- Contain page navber -->
 		@include ('backend.layouts.navbar')
+
 		<section>
 			<!-- Left Sidebar -->
 			@include ('backend.layouts.left_sidebar')
 		</section>
+
 		<section class="content">
 			<div class="container-fluid">
+				<!-- layouts for Notificaiton -->
+                @include ('backend.layouts.partial.message')
 				<!-- layouts for main content -->
         		@yield ('main_content')
 			</div>

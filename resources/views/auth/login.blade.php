@@ -1,69 +1,99 @@
-@extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card card-default">
-                <div class="card-header">Login</div>
+<!DOCTYPE html>
+<html>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Sign In | UOG - Online Discussion Forum</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">E-Mail Address</label>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+    <!-- Bootstrap Core Css -->
+    <link href="{{ asset('css/plugins/bootstrap/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+    <!-- Waves Effect Css -->
+    <link href="{{ asset('css/backend/plugins/node-waves/waves.css') }}" rel="stylesheet" />
 
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+    <!-- Animation Css -->
+    <link href="{{ asset('css/backend/plugins/animate-css/animate.css') }}" rel="stylesheet" />
+    <!-- main Css -->
+    <link href="{{ asset('css/backend/style.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('css/backend/custom.css') }}" rel="stylesheet">
+
+</head>
+
+<body class="login-page">
+    <div class="login-box">
+        <div class="logo">
+            <a href="javascript:void(0);">UOG <b>Forum</b></a>
+            <small>A Online Discussion Forum</small>
+        </div>
+        <div class="card">
+            <div class="body">
+                {!! Form::open(['route'=>['loginCheck'],'name'=>'login']) !!}
+                
+                    <div class="msg">Sign in to start your session</div>
+                    <div class="input-group {{ $errors->has('email') ? 'has-error' : ''}} ">
+                        <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+                        <div class="form-line ">
+                            <input type="email" name="email" value="{{ old('email') }}" placeholder="E-Mail Address" id="input-email" class="form-control" required autofocus>
+                            @if ($errors->has('email'))
+                              <span class="help-block">
+                                <block>{{ $errors->first('email') }}
+                                </block>
+                              </span> 
+                            @endif
+                        </div>
+                    </div>
+                    <div class="input-group {{ $errors->has('email') ? 'has-error' : ''}} ">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="password" name="password" value="" placeholder="Password" id="input-password" class="form-control" /> 
+
+                            @if ($errors->has('password'))
+                              <span class="help-block">
+                              <block>{{ $errors->first('password') }}</block></span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8 p-t-5">
+                            <div class="col-xs-6 col-md-12">
+                                <a href="{{ route('password.request') }}">Forgot Your Password?</a>
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                        <div class="col-xs-4">
+                            <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
                         </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    
+                </form>
             </div>
         </div>
     </div>
-</div>
-@endsection
+
+    <script src="{{ asset('js/backend/plugins/jquery/jquery.min.js') }}"></script>
+    
+    <!-- Waves Effect Plugin Js -->
+    <script src="{{ asset('js/backend/plugins/node-waves/waves.js') }}"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+    
+    <!-- Bootstrap Core Js -->
+    <script src="{{ asset('js/plugins/bootstrap/bootstrap.js') }} "></script>
+
+    <!-- Custom Js -->
+    <script src="{{ asset('js/backend/admin.js') }}"></script>
+
+</body>
+
+</html>
