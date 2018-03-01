@@ -15,7 +15,9 @@ class TopicController extends Controller
      */
     public function index()
     {
-        //
+        $title = 'View All Topic';
+        $topics = Topic::latest()->get();
+        return view ('backend.pages.topic.view_topic', compact('title','topics'));
     }
 
     /**
@@ -40,14 +42,15 @@ class TopicController extends Controller
         $validate = $this->validate(request(),[
             'topic_title' => 'required|min:3',
             'topic_des' => 'required|min:3',
+            'start_date' => 'required',
             'closure_date' => 'required',
             'final_date' => 'required',
             'status' => 'required',
         ]);
 
         $closure_date = Carbon::parse(request('closure_date'))->format('Y-m-d');
+        $start_date = Carbon::parse(request('start_date'))->format('Y-m-d');
 
-       
         $final_date = Carbon::parse(request('final_date'))->format('Y-m-d');
 
         if($validate)
@@ -55,13 +58,13 @@ class TopicController extends Controller
             Topic::create([
                 'title' => request('topic_title'),
                 'description' => request('topic_des'),
-                'start_date' => Carbon::now(),
+                'start_date' => $start_date,
                 'closure_date' => $closure_date,
                 'final_date' => $final_date,
                 'status' => request('status')
             ]);
 
-            return redirect()->back()->withMsgsuccess('Topic created successfully');
+            return redirect()->route('viewTopic')->withMsgsuccess('Topic created successfully');
         }else{
             return redirect()->back()->withInput();
         }

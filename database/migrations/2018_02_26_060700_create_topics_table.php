@@ -19,8 +19,9 @@ class CreateTopicsTable extends Migration
             $table->string('description');
             $table->date('start_date');
             $table->date('closure_date');
-            $table->date('final_date');
+            $table->date('end_date');
             $table->tinyInteger('status')->default('1');
+            $table->integer('view')->default('0');
             $table->timestamps();
         });
     }

@@ -65,6 +65,24 @@
 					
 					<div class="row clearfix">
                         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="start_date">Start Date</label>
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group {{ $errors->has('start_date') ? ' has-error' : '' }}">
+                                <div class="form-line">
+                                    <input type="text" id="start_date" name="start_date" class="datepicker form-control" placeholder="Please choose a date" value="{{ old('start_date') }}" data-validation="required">
+                                    @if ($errors->has('start_date'))
+                                      <span class="help-block">
+                                          <block>{{ $errors->first('start_date') }}</block>
+                                      </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="closure_date">Closure Date</label>
                         </div>
                         <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
@@ -111,7 +129,7 @@
                         </div>
                         <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                             
-                            {!! Form::select('status',['1'=>'Active','0'=>'Deactive'],1,['class'=>'form-control show-tick','required','id'=>'status','placeholder'=>'Please select Status','data-validation'=>'required']) !!}
+                            {!! Form::select('status',['1'=>'Active','0'=>'Deactive'],0,['class'=>'form-control show-tick','required','id'=>'status','placeholder'=>'Please select Status','data-validation'=>'required']) !!}
                             
                         </div>
                     </div>
@@ -141,6 +159,11 @@
 
     <script>
         $('#final_date').bootstrapMaterialDatePicker({ weekStart : 0, time : false, format : 'DD MMMM YYYY ', minDate : new Date(), clearButton : true });
+
+        $('#start_date').bootstrapMaterialDatePicker({ weekStart : 0, time : false, format : 'DD MMMM YYYY ', minDate : new Date(), clearButton : true }).on('change', function(e, date)
+        {
+            $('#closure_date').bootstrapMaterialDatePicker('setMinDate', date);
+        });
 
         $('#closure_date').bootstrapMaterialDatePicker({ weekStart : 0, time : false, format : 'DD MMMM YYYY ', minDate : new Date(), clearButton : true }).on('change', function(e, date)
         {

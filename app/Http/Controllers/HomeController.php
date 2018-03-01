@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Topic;
 class HomeController extends Controller
 {
     /**
@@ -22,7 +22,21 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('backend.pages.home');
+    {   
+        $topics = Topic::where('status', 1)->latest()->paginate(5);
+        return view('frontend.pages.home', compact('topics'));
+    }
+
+    public function show($id)
+    {   
+        $topic = Topic::find($id); // finding the post
+
+        
+        $topic->increment('view');
+            
+        $topics = Topic::where('id', $id)->get();
+
+        return back();
+        //return view('frontend.pages.home', compact('topics'));
     }
 }

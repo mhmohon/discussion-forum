@@ -1,7 +1,10 @@
 <?php 
+Route::group(['middleware'=>'auth'],function(){
 
-Route::get('forum/dashboard/add/topic', 'TopicController@create')->name('addTopic');
+	Route::get('forum/dashboard/add/topic', ['middleware'=>'check-role:admin|qam','uses'=>'TopicController@create'])->name('addTopic');
 
-Route::post('forum/dashboard/add/topic', 'TopicController@store')->name('storeTopic');
+	Route::post('forum/dashboard/add/topic', ['middleware'=>'check-role:admin|qam','uses'=>'TopicController@store'])->name('storeTopic');
 
-Route::post('forum/dashboard/view/topic', 'TopicController@index')->name('viewTopic');
+	Route::get('forum/dashboard/view/topic', ['middleware'=>'check-role:admin|qam','uses'=>'TopicController@index'])->name('viewTopic');
+
+});

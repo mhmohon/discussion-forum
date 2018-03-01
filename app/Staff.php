@@ -12,6 +12,6 @@ class Staff extends Model
 
     public function user()
     {
-    	$this->hasOne(User::class());
+        return $this->belongsTo(User::class);
     }
 }

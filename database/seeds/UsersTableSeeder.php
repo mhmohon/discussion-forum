@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
         $user = User::create([
         	'email' => 'onlinebdforum@gmail.com',
         	'password' => bcrypt('forum@admin'),
-        	'user_role' => '0',
+        	'user_role' => '1',
         	'user_status' => '1',
         ]);
         Staff::create([
@@ -27,10 +27,10 @@ class UsersTableSeeder extends Seeder
             
         ]);
         $user = User::create([
-        	'email' => 'shatu@gmail.com',
-        	'password' => bcrypt('forum@qoa'),
-        	'user_role' => '1',
-        	'user_status' => '1',
+            'email' => 'shatu@gmail.com',
+            'password' => bcrypt('forum@qoa'),
+            'user_role' => '2',
+            'user_status' => '1',
         ]);
         Staff::create([
             'first_name' => 'Arman',
@@ -40,17 +40,31 @@ class UsersTableSeeder extends Seeder
             'user_id' => $user->id,
             
         ]);
+        $user = User::create([
+        	'email' => 'irina@gmail.com',
+        	'password' => bcrypt('forum@qoc'),
+        	'user_role' => '3',
+        	'user_status' => '1',
+        ]);
+        Staff::create([
+            'first_name' => 'Irina',
+            'last_name' => 'Alam',
+            'phone' => '01521208077',
+            'gender' => 'female',
+            'user_id' => $user->id,
+            
+        ]);
 
         $user = User::create([
         	'email' => 'rudro@gmail.com',
         	'password' => bcrypt('forum@stu'),
-        	'user_role' => '4',
+        	'user_role' => '5',
         	'user_status' => '1',
         ]);
         Staff::create([
             'first_name' => 'Mehadi Hassan',
             'last_name' => 'Rudro',
-            'phone' => '01521208099',
+            'phone' => '01521207099',
             'gender' => 'male',
             'user_id' => $user->id,
             

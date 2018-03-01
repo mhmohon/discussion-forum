@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use View;
+use App\Topic;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer('frontend.layouts.right_sidebar', function($view){
+
+            $topics = Topic::where('status', 0)->get();
+
+            $view->with('topics',$topics);
+        });
     }
 
     /**

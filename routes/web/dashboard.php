@@ -1,3 +1,3 @@
 <?php
 
-	Route::get('/dashboard', 'DashboardController@index')->name('dashboardHome');
+	Route::get('/forum/dashboard', 'DashboardController@index')->name('dashboardHome');

@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/forum';
 
     /**
      * Create a new controller instance.
@@ -47,14 +47,16 @@ class LoginController extends Controller
         $user = \Auth::user();
         $type = $user->user_role;
         
-        if($type == 0){
-            return redirect()->intended('/dashboard');
-        }elseif($type == 1){
-            return redirect()->intended('/dashboard');
-        }elseif($type==2){
-            return redirect()->intended('/');
-        }elseif($type==3){
-            return redirect()->intended('/');
+        if($type == 1){
+            return redirect()->intended('/forum/dashboard');
+        }elseif($type == 2){
+            return redirect()->intended('/forum/dashboard');
+        }elseif($type== 3){
+            return redirect()->intended('/forum');
+        }elseif($type== 4){
+            return redirect()->intended('/forum');
+        }elseif($type== 5){
+            return redirect()->intended('/forum');
         }else{
         return redirect()->intended($this->redirectPath());
         }

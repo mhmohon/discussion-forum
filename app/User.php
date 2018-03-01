@@ -29,14 +29,15 @@ class User extends Authenticatable
 
     public function staff()
     {
-        $this->belongsTo(Staff::class);
+        return $this->hasOne(Staff::class);
     }
+
     public function student()
     {
-        $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class);
     }
     public function department()
     {
-        $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class);
     }
 }
