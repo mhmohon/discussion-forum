@@ -5,8 +5,7 @@
 <!-- Bootstrap -->
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
-<!-- Custom -->
-<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,6 +21,8 @@
 
 <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
+<!-- Custom -->
+<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
 <!-- CSS STYLE-->
 <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" media="screen" />
@@ -29,3 +30,4 @@
 <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
 <link rel="stylesheet" type="text/css" href="{{ asset('css/setting.css') }}" media="screen" />
 
+@yield('extra_css')

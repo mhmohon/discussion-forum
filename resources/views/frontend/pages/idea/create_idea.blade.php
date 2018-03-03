@@ -1,6 +1,14 @@
 @extends ('frontend.layouts.master')
 
 @section('page_title', 'Add Idea')
+
+@section('extra_css')
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+ 
+    <!-- Include Editor style. -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.5/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.5/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+@endsection
 @section('main_content')
 
 	<div class="container">
@@ -77,35 +85,14 @@
 	                                    @endif  
 	                                </div>
 	                            </div>
-	                            <!-- upload image -->
-	                            <div class="row">
-						        <div class="col-sm-10 offset-sm-1">
-						            <h2 class="page-heading">Upload your Images <span id="counter"></span></h2>
-						            <form method="post" action="{{ url('/images-save') }}"
-						                  enctype="multipart/form-data" class="dropzone" id="my-dropzone">
-						                {{ csrf_field() }}
-						                <div class="dz-message">
-						                    <div class="col-xs-8">
-						                        <div class="message">
-						                            <p>Drop files here or Click to Upload</p>
-						                        </div>
-						                    </div>
-						                </div>
-						                <div class="fallback">
-						                    <input type="file" name="file" value="" multiple>
-						                </div>
-						            </form>
-						        </div>
-						    </div>
-     <!-- end upload image -->
-	                       <div class="form-group {{ $errors->has('idea_detail') ? ' has-error' : '' }}">
+	                            <div class="form-group {{ $errors->has('idea_detail') ? ' has-error' : '' }}">
 	                                <div class="form-line">
 	                                    <label for="postas" class="form-lbl">Post As: </label>
 	                                    <div class="radio-inline">
-	                                      <label><input type="radio" value="realuser" checked name="postas">Real user</label>
+	                                      <label><input type="radio" checked name="postas" value="realuser">Real user</label>
 	                                    </div>
 	                                    <div class="radio-inline">
-	                                      <label><input type="radio" value="anynomous" name="postas">Anynomous</label>
+	                                      <label><input type="radio" name="postas" value="anynomous">Anynomous</label>
 	                                    </div>  
 	                                </div>
 	                            </div>
@@ -143,25 +130,22 @@
 
 @section('extra_js')
 
-    <script src="{{ asset('js/plugins/tinymce/tinymce.min.js') }}"></script>
-    <script>
-        tinymce.init({
-            selector: '#editor',
-            width: "100%",
-            height: 200,
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+ 
+    <!-- Include Editor JS files. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.5/js/froala_editor.pkgd.min.js"></script>
+ 
+    <!-- Initialize the editor. -->
+    <script> 
+        $(function() { 
+            $('#editor').froalaEditor({
+            	heightMin: 300,
+      			heightMax: 500,
+                toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'fontFamily', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', '|', 'spellChecker', 'html', '|', 'undo', 'redo']
+            });
 
-            /* display statusbar */
-            menubar:false,
-            statusbar: false,
-            plugins: [
-                "advlist autolink link lists charmap preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                "save table contextmenu directionality emoticons template paste textcolor"
-            ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link code | preview media fullpage | forecolor backcolor emoticons",
-            
-        });
-
-        
+        }); 
     </script>
+    
 @endsection

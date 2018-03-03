@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Topic;
 use App\Idea;
-
+use App\User;
 class IdeaController extends Controller
 {
     /**
@@ -35,7 +35,7 @@ class IdeaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $validate = $this->validate(request(),[
             'idea_title' => 'required|min:3',
@@ -45,7 +45,39 @@ class IdeaController extends Controller
             
         ]);
 
-        dd(request('idea_detail'));
+        if($validate){
+
+        $user_id = \Auth::user()->id;
+        if(request('postas') == 'realuser'){
+
+            $name = \Auth::user()->staff->first_name. ' '.\Auth::user()->staff->last_name;
+            Idea::create([
+                'title' => request('idea_title'),
+                'description' => request('idea_detail'),
+                'name' => $name,
+                'status' => '0',
+                'user_id' => $user_id,
+                'topic_id' => $id,
+
+            ]);
+
+        }elseif(request('postas') == 'anynomous'){
+            Idea::create([
+                'title' => request('idea_title'),
+                'description' => request('idea_detail'),
+                'name' => 'anynomous',
+                'status' => '0',
+                'user_id' => $user_id,
+                'topic_id' => $id,
+
+            ]);
+        }
+        return redirect()->route('topicShow', $id)->withMsgsucess('Your Idea has been posted.');
+
+        }else{
+            return redirect()->back()->withInput();
+        }
+
     }
 
     /**

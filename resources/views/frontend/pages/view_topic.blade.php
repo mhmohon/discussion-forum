@@ -53,7 +53,8 @@
                     
                     <div class="clearfix"></div>
                 </div>
-
+                
+                @foreach($ideas as $idea) 
                 <!-- Idea -->
                 <div class="post">
                     <div class="topwrap">
@@ -64,15 +65,16 @@
    
                         </div>
                         <div class="posttext pull-left">
-                            <h2>{{ $topic->title }}</h2>
-                            <p>Typography helps you engage your audience and establish a distinct, unique personality on your website. Knowing how to use fonts to build character in your design is a powerful skill, and exploring the history and use of typefaces, as well as typogra...</p>
+                            <h2>{{ $idea->title }}</h2>
+                            <hr>
+                            <p>{!! $idea->description !!}</p>
                         </div>
                         <div class="clearfix"></div>
                     </div>                              
                     <div class="postinfobot">
 
                        <div class="posted pull-left">
-                           <i class="fa fa-user-o"></i> name &nbsp <i class="fa fa-clock-o"></i> 20 Nov @ 9:45am
+                           <i class="fa fa-user-o"></i> {{ $idea->name }} &nbsp <i class="fa fa-clock-o"></i> {{ $idea->created_at->diffForHumans() }}
                        </div>
 
                          <div class="likeblock pull-right">
@@ -84,6 +86,8 @@
                         <div class="clearfix"></div>
                     </div>
                 </div><!-- Idea -->
+
+                @endforeach
 
                 <div class="post pull-left">
                     <div class="postreply">

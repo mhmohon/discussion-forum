@@ -61,7 +61,7 @@ class UsersTableSeeder extends Seeder
         	'user_role' => '5',
         	'user_status' => '1',
         ]);
-        Staff::create([
+        Student::create([
             'first_name' => 'Mehadi Hassan',
             'last_name' => 'Rudro',
             'phone' => '01521207099',

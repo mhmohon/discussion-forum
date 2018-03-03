@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Topic;
+use App\Idea;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -37,12 +38,13 @@ class HomeController extends Controller
     public function show($id)
     {   
         $topic = Topic::find($id); // finding the post
+        
+        $ideas = Idea::where('topic_id', $id)->paginate(5);
+
         if($topic){
             
             $topic->increment('view');
         }
-
-            
-        return view('frontend.pages.view_topic', compact('topic'));
+        return view('frontend.pages.view_topic', compact('topic','ideas'));
     }
 }
