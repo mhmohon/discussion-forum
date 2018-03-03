@@ -20,13 +20,13 @@
             <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
 
                 <div class="avatar pull-right dropdown">
-                    <a data-toggle="dropdown" href="#"><img src="{{ asset('photos/avatar.png') }}" alt="" /></a> <b class="caret"></b>
+                    <a data-toggle="dropdown" href="#"><img src="{{ asset('photos/icon/avatar.png') }}" alt="" /></a> <b class="caret"></b>
                     
                     <ul class="dropdown-menu divider" role="menu">
                         @if(checkPermission(['admin','qac','qam','staff']))
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ Auth::user()->staff->first_name . ' ' . Auth::user()->staff->last_name }}</a></li>
                         <div class="divline"></div>
-                        <li role="presentation"><a role="menuitem" tabindex="-2" href="#">Go to dashboard</a></li>
+                        <li role="presentation"><a href="{{ route('dashboardHome') }}" role="menuitem" tabindex="-2" href="#">Go to dashboard</a></li>
                         
                         @endif
                         @if(checkPermission(['student']))

@@ -38,10 +38,4 @@
     
         });
 
-
-        $(".list a").on("click", function(){
-          $(".menu").find(".active").removeClass("active");
-          $(this).parent().addClass("active");
-        });
-
     </script>

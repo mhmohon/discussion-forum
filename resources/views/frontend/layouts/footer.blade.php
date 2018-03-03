@@ -18,10 +18,25 @@
 </footer>
 <!-- get jQuery from the google apis -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
-
+    
+    <script src="{{ asset('js/backend/plugins/jquery/jquery.min.js') }}"></script>
+    
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 
     <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
     <script type="text/javascript" src="{{ asset('js/jquery.themepunch.plugins.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.themepunch.revolution.min.js') }}"></script>
 
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+    <!-- layouts for extra js -->
+    @yield ('extra_js')
+
+    <script>
+        $.validate({
+            modules : 'location, date, security, file, sanitize, toggleDisabled',
+            disabledFormFilter : 'form.btn-disabled',
+    
+        });
+
+    </script>

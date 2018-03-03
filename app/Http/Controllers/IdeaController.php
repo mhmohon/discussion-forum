@@ -4,20 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Topic;
-use Carbon\Carbon;
+use App\Idea;
 
-class TopicController extends Controller
+class IdeaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $title = 'View All Topic';
-        $topics = Topic::latest()->get();
-        return view ('backend.pages.topic.view_topic', compact('title','topics'));
+        $topic =  Topic::find($id);
+        return view('frontend.pages.idea.create_idea', compact('topic'));
     }
 
     /**
@@ -26,9 +25,8 @@ class TopicController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        $title = 'Add new Topic';
-        return view ('backend.pages.topic.create_topic', compact('title'));
+    {
+        //
     }
 
     /**
@@ -40,34 +38,14 @@ class TopicController extends Controller
     public function store(Request $request)
     {
         $validate = $this->validate(request(),[
-            'topic_title' => 'required|min:3',
-            'topic_des' => 'required|min:3',
-            'start_date' => 'required',
-            'closure_date' => 'required',
-            'final_date' => 'required',
-            'status' => 'required',
+            'idea_title' => 'required|min:3',
+            'idea_detail' => 'required|min:3',
+            'agree' => 'required',
+            'postas' => 'required',
+            
         ]);
 
-        $closure_date = Carbon::parse(request('closure_date'))->format('Y-m-d');
-        $start_date = Carbon::parse(request('start_date'))->format('Y-m-d');
-
-        $final_date = Carbon::parse(request('final_date'))->format('Y-m-d');
-
-        if($validate)
-        {
-            Topic::create([
-                'title' => request('topic_title'),
-                'description' => request('topic_des'),
-                'start_date' => $start_date,
-                'closure_date' => $closure_date,
-                'end_date' => $final_date,
-                'status' => request('status')
-            ]);
-
-            return redirect()->route('viewTopic')->withMsgsuccess('Topic created successfully');
-        }else{
-            return redirect()->back()->withInput();
-        }
+        dd(request('idea_detail'));
     }
 
     /**

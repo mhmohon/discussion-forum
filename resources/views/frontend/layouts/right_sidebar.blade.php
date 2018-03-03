@@ -6,15 +6,22 @@
     <div class="sidebarblock">
         <h3>Up Coming Topics </h3>
         <div class="divline"></div>
-        @foreach($topics as $topic)
-            <div class="blocktxt">
-                <a href="#" class="pull-left">{{ $topic->title }}</a><br>
-                 <div class="posted pull-left">
-                    <i class="fa fa-clock-o"></i> Opening time: {{ \Carbon\Carbon::parse($topic->end_date)->diffForHumans() }}
+        @if($commingTopics->count())
+            @foreach($commingTopics as $topic)
+                <div class="blocktxt">
+                    <a href="#" class="pull-left">{{ $topic->title }}</a><br>
+                     <div class="posted pull-left">
+                        <i class="fa fa-clock-o"></i> Opening time: {{ \Carbon\Carbon::parse($topic->start_date)->diffForHumans() }}
+                    </div>
                 </div>
+                <div class="divline"></div>
+            @endforeach
+        @else
+            <div class="blocktxt">
+                <a href="#" class="pull-left">No new topic is comming.</a><br>
+                 
             </div>
-            <div class="divline"></div>
-        @endforeach
+        @endif
         
     </div>
 

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Topic;
+use Carbon\Carbon;
+
 class HomeController extends Controller
 {
     /**
@@ -23,20 +25,24 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        $topics = Topic::where('status', 1)->latest()->paginate(5);
-        return view('frontend.pages.home', compact('topics'));
+        $currentDate = Carbon::now()->toDateString();
+        
+        $latestTopics = Topic::where('start_date', '<=', $currentDate)
+                                ->where('status', 1)
+                                ->latest()->paginate(5);
+        
+        return view('frontend.pages.home', compact('latestTopics'));
     }
 
     public function show($id)
     {   
         $topic = Topic::find($id); // finding the post
-
-        
-        $topic->increment('view');
+        if($topic){
             
-        $topics = Topic::where('id', $id)->get();
+            $topic->increment('view');
+        }
 
-        return back();
-        //return view('frontend.pages.home', compact('topics'));
+            
+        return view('frontend.pages.view_topic', compact('topic'));
     }
 }

@@ -54,7 +54,7 @@
                                         <td class="text-center">
                                             <span class="label label-success"> Published</span>
                                         </td>
-                                    @endif
+                                    
                                     @else
                                         <td class="text-center">
                                             <span class="label label-danger"> Closed</span>

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use View;
+use Carbon\Carbon;
 use App\Topic;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,9 +18,11 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('frontend.layouts.right_sidebar', function($view){
 
-            $topics = Topic::where('status', 0)->get();
+            $currentDate = Carbon::now()->toDateString();
 
-            $view->with('topics',$topics);
+            $commingTopics = Topic::where('start_date', '>', $currentDate)->latest()->limit(10)->get();
+
+            $view->with('commingTopics',$commingTopics);
         });
     }
 

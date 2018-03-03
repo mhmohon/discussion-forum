@@ -147,7 +147,7 @@ ul.socialicons li a:hover {
 
 /*--- Avatar ---*/
 .avt {
-    margin-top: 5px;
+    margin-top: 10px;
     height: 38px;
 }
 
@@ -434,7 +434,7 @@ td.chbox {
 
 .post .userinfo {
     width: 15%;
-    padding: 20px 0 15px 15px;
+    padding: 28px 0 15px 8px;
 }
 
 .post .posttext {
@@ -464,6 +464,12 @@ td.chbox {
 .post .icons {
     width: 48px;
     border-top: solid 1px #f1f1f1;
+    margin-top: 12px;
+    padding-top: 7px;
+}
+
+.post .icons-idea {
+    
     margin-top: 12px;
     padding-top: 7px;
 }
@@ -642,6 +648,9 @@ a.down:hover {
     margin-bottom: 0;
 }
 
+.beforidea {
+    margin-bottom: 20px;
+}
 
 /*--- Quote post ---*/
 .post blockquote {
@@ -865,6 +874,9 @@ a.down:hover {
 }
 
 
+.form-lbl {
+	margin-bottom: 0px !important;
+}
 
 /*-----------------------------------------------------------------*/
 /*--- #04_new_account.html - NEW ACCOUNT ---*/
@@ -985,8 +997,8 @@ a.down:hover {
     }
 
     .post .userinfo {
-        width: 30%;
-        padding: 15px 0 15px 15px;
+        width: 26%;
+		padding: 40px 0px 15px 0px;
     }
 
     .post .posttext {

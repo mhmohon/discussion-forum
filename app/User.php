@@ -36,8 +36,19 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Student::class);
     }
+
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function idea()
+    {
+        $this->hasMany(Idea::class);
+    }
+
+    public function comment()
+    {
+        $this->hasMany(Comment::class);
     }
 }

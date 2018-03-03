@@ -19,13 +19,14 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8">
-                @foreach($topics as $topic)
+                @if($latestTopics->count())
+                @foreach($latestTopics as $topic)
                 <!-- POST -->
                 <div class="post">
                     <div class="wrap-ut pull-left">
                         <div class="userinfo pull-left">
                             <div class="avatar">
-                                <i class="far fa-comments"></i>
+                                <img src="{{ asset('photos/icon/topic.png') }}" alt="" />
                             </div>
    
                         </div>
@@ -50,13 +51,15 @@
 
                         </div>
                         <div class="views"><i class="fa fa-eye"></i> {{ number_format($topic->view) }}</div>
-                        <div class="time"><i class="fa fa-clock-o"></i> {{ $topic->created_at->diffForHumans() }}</div>                                    
+                        <div class="time"><i class="fa fa-clock-o"></i> {{ \Carbon\Carbon::parse($topic->start_date)->diffForHumans() }}</div>                                    
                     </div>
                     <div class="clearfix"></div>
                 </div><!-- POST -->
 
                 @endforeach
-
+                @else
+                    <h2>No Topics</h2>
+                @endif
             </div>
             
                 <!-- Left Sidebar -->
@@ -70,7 +73,7 @@
             <div class="col-lg-8 col-xs-12">
                 
                 <div class="pull-left">
-                    {{ $topics->links() }}
+                    {{ $latestTopics->links() }}
                 </div>
                 
             </div>

@@ -14,4 +14,6 @@ class Topic extends Model
     {
     	$this->hasMany(Idea::class);
     }
+
+
 }
