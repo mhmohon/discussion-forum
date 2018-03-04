@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Idea;
 use App\Comment;
 
 class CommentController extends Controller
@@ -47,7 +48,7 @@ class CommentController extends Controller
         $user_role = \Auth::user()->user_role;
         if(request('postas') == 'realuser'){
 
-            if($user_role = '5'){
+            if($user_role == '5'){
                 $name = \Auth::user()->student->first_name. ' '.\Auth::user()->student->last_name;
             }else{
                 $name = \Auth::user()->staff->first_name. ' '.\Auth::user()->staff->last_name;
@@ -72,7 +73,7 @@ class CommentController extends Controller
 
             ]);
         }
-        return redirect()->route('ideaShow', $id)->withMsgsucess('Your comment has been posted sucessfully.');
+        return redirect()->route('ideaShow', $id)->withMsgsuccess('Your comment has been posted sucessfully.');
 
         }else{
             return redirect()->back()->withInput();
@@ -96,9 +97,12 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idea_id, $comment_id)
     {
-        //
+        $idea = Idea::find($idea_id);
+        $comment = Comment::find($comment_id);
+        
+        return view('frontend.pages.comment.edit_comment', compact('comment','idea'));
     }
 
     /**
@@ -108,9 +112,43 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idea_id, $comment_id)
     {
-        //
+        $validate = $this->validate(request(),[
+            'comment_detail' => 'required|min:3',
+            'agree' => 'required',
+            'postas' => 'required',
+            
+        ]);
+        if($validate){
+
+        $user_id = \Auth::user()->id;
+        $user_role = \Auth::user()->user_role;
+        if(request('postas') == 'realuser'){
+            if($user_role == '5'){
+                $name = \Auth::user()->student->first_name. ' '.\Auth::user()->student->last_name;
+            }else{
+                $name = \Auth::user()->staff->first_name. ' '.\Auth::user()->staff->last_name;
+            }
+            
+            Comment::find($comment_id)->update([
+                'description' => request('comment_detail'),
+                'name' => $name,
+            ]);
+
+        }elseif(request('postas') == 'anynomous'){
+
+            Comment::find($comment_id)->update([
+                'description' => request('comment_detail'),
+                'name' => 'anynomous',
+
+            ]);
+        }
+        return redirect()->route('ideaShow', $idea_id)->withMsgsuccess('Your Comment has been Updated.');
+
+        }else{
+            return redirect()->back()->withInput();
+        }
     }
 
     /**

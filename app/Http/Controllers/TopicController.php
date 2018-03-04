@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Topic;
+use App\Idea;
 use Carbon\Carbon;
 
 class TopicController extends Controller
@@ -89,7 +90,9 @@ class TopicController extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = 'Edit Existing Topic';
+        $topic = Topic::find($id);
+        return view ('backend.pages.topic.edit_topic', compact('title','topic'));
     }
 
     /**
@@ -101,7 +104,34 @@ class TopicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validate = $this->validate(request(),[
+            'topic_title' => 'required|min:3',
+            'topic_des' => 'required|min:3',
+            'start_date' => 'required',
+            'closure_date' => 'required',
+            'final_date' => 'required',
+            'status' => 'required',
+        ]);
+        $closure_date = Carbon::parse(request('closure_date'))->format('Y-m-d');
+        $start_date = Carbon::parse(request('start_date'))->format('Y-m-d');
+
+        $final_date = Carbon::parse(request('final_date'))->format('Y-m-d');
+
+        if($validate)
+        {
+            Topic::find($id)->update([
+                'title' => request('topic_title'),
+                'description' => request('topic_des'),
+                'start_date' => $start_date,
+                'closure_date' => $closure_date,
+                'end_date' => $final_date,
+                'status' => request('status')
+            ]);
+
+            return redirect()->route('viewTopic')->withMsgsuccess('Topic updated successfully');
+        }else{
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -112,6 +142,15 @@ class TopicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ideas = Idea::where('topic_id', $id)->get();
+
+        if($ideas->count()){
+            return redirect()->back()->withMsgerror('Unable to delete this topic, It is being used');
+        }else{
+            Topic::find($id)->delete();
+            return redirect()->back()->withMsgsuccess('Topic deleted sucessfully');
+        }
+
+        dd($ideas);
     }
 }

@@ -20,6 +20,7 @@
 			<div class="container-fluid">
 				<!-- layouts for Notificaiton -->
                 @include ('backend.layouts.partial.message')
+                
 				<!-- layouts for main content -->
         		@yield ('main_content')
 			</div>

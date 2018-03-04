@@ -16,6 +16,8 @@ require __DIR__ . '/web/backend_student.php';
 
 require __DIR__ . '/web/backend_topic.php';
 
+require __DIR__ . '/web/backend_idea.php';
+
 require __DIR__ . '/web/idea.php';
 
 require __DIR__ . '/web/comment.php';

@@ -76,7 +76,7 @@
 	                            <div class="form-group {{ $errors->has('idea_detail') ? ' has-error' : '' }}">
 	                                <div class="form-line">
 	                                    <textarea id="editor" name="idea_detail" class="form-control" placeholder="Type Idea Details" 
-	                                    value="{{ old('idea_detail') }}" data-validation="length" data-validation-length="3-255" 
+	                                     data-validation="length" data-validation-length="3-255" 
 	                                    data-validation-error-msg="Topic name has to be an alphanumeric value (3-255 chars)">{{ $idea->description }}</textarea>
 	                                    @if ($errors->has('idea_detail'))
 	                                        <span class="text-danger help-block">

@@ -47,4 +47,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    /**
+     * Return the user attributes.
+
+     * @return array
+     */
+    public static function getAuthor($id)
+    {
+        $user = self::find($id);
+        return [
+            'id'     => $user->id,
+            'email'  => $user->email,
+        ];
+    }
 }

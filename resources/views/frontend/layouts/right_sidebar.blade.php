@@ -24,6 +24,7 @@
     </div>
 
     @if(checkPermission(['student']))
+        @if($activeTopics->count())
 
         @foreach($activeTopics as $activeTopic)
            <div class="sidebarblock">
@@ -34,6 +35,41 @@
                 </div>
             </div>
         @endforeach
+
+        @else
+            <div class="sidebarblock">
+                <h3>My Active Topics</h3>
+                <div class="divline"></div>
+                <div class="blocktxt">
+                    <h2>You has not posted any idea yet.</h2>
+                </div>
+            </div>
+        @endif
+    @endif
+
+    @if(checkPermission(['qac','qam','staff']))
+
+        @if($activeIdeas->count())
+
+        @foreach($activeIdeas as $activeIdea)
+           <div class="sidebarblock">
+                <h3>My Latest Replies</h3>
+                <div class="divline"></div>
+                <div class="blocktxt">
+                    <a href="{{ route('ideaShow',$activeIdea->id) }}">{{ $activeIdea->title }}</a>
+                </div>
+            </div>
+        @endforeach
+        @else
+            <div class="sidebarblock">
+                <h3>My Latest Replies</h3>
+                <div class="divline"></div>
+                <div class="blocktxt">
+                    <h2>You has not posted any comment yet.</h2>
+                </div>
+            </div>
+        @endif
+
     @endif
     
 </div>

@@ -48,8 +48,12 @@
                     <span>View Forum</span>
                 </a>
             </li>
-
+            
+            @if(! empty($topic))
+            <li class="{!! (Request::url() == route('addTopic') || Request::url() == route('viewTopic') || Request::url() == route('editTopic', $topic->id)) ? 'active' : '' !!}">
+            @else
             <li class="{!! (Request::url() == route('addTopic') || Request::url() == route('viewTopic')) ? 'active' : '' !!}">
+            @endif
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">text_fields</i>
                     <span>Topic</span>
@@ -61,9 +65,30 @@
                         </a>
                         
                     </li>
+                    
                     <li class="{!! (Request::url() == route('viewTopic')) ? 'active' : '' !!}">
                         <a href="{{ route('viewTopic') }}">
                             <span>View All Topic</span>
+                        </a>
+                        
+                    </li>
+                    
+                </ul>
+            </li>
+            @if(! empty($idea))
+            <li class="{!! Request::url() == route('viewIdea') || Request::url() == route('editIdea', $idea->id) ? 'active' : '' !!}">
+            @else
+            <li class="{!! Request::url() == route('viewIdea') ? 'active' : '' !!}">  
+            @endif
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">assignment</i>
+                    <span>Idea</span>
+                </a>
+                <ul class="ml-menu">
+                    
+                    <li class="{!! (Request::url() == route('viewIdea')) ? 'active' : '' !!}">
+                        <a href="{{ route('viewIdea') }}">
+                            <span>View All Idea</span>
                         </a>
                         
                     </li>

@@ -10,12 +10,12 @@
             </div>
         </div>
     </div>
-
+   
 
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8">
-
+                
                 <!-- POST -->
                 <div class="post beforepagination">
                     <div class="topwrap">
@@ -55,7 +55,7 @@
                 
 
                 <div class="paginationf">
-                    <div class="pull-left"><a href="#" class="prevnext"><i class="fa fa fa-comments"></i></a></div>
+                    <div class="pull-left"><a href="#" class="prevnext"><i class="fa fa fa-comments"></i>Comments</a></div>
                     <div class="pull-left">
                        
                     </div>
@@ -63,8 +63,12 @@
                     <div class="clearfix"></div>
                 </div>
                 
-                @foreach($comments as $comment) 
-                <!-- Idea -->
+                @foreach($comments as $comment)
+
+                @if(checkPermission(['student']))
+
+                @if($comment->user->user_role == '5')
+                <!-- Comment -->
                 <div class="post">
                     <div class="topwrap">
                         <div class="comment-logo userinfo pull-left">
@@ -78,7 +82,7 @@
                                 {{ $comment->description }}
                                 @if(\Auth::user()->id == $comment->user_id)
                                     <span class="pull-right">
-                                        <a href=""><strong>Edit</strong></a>
+                                        <a href="{{ route('EditComment', [$idea->id, $comment->id]) }}"><strong>Edit</strong></a>
                                     </span>
                                 @endif
                             </h2>
@@ -99,10 +103,51 @@
                     </div>
 
                     
-                </div><!-- Idea -->
+                </div><!-- comment -->
+                @endif
 
-                @endforeach
+                @else
+
+                <!-- Comment -->
+                <div class="post">
+                    <div class="topwrap">
+                        <div class="comment-logo userinfo pull-left">
+                            <div class="avatar">
+                                <img src="{{ asset('photos/icon/comment.png') }}" alt="" />
+                            </div>
+   
+                        </div>
+                        <div class="posttext idea-text pull-left">
+                            <p>
+                                {{ $comment->description }}
+                                @if(\Auth::user()->id == $comment->user_id)
+                                    <span class="pull-right">
+                                        <a href="{{ route('EditComment', [$idea->id, $comment->id]) }}"><strong>Edit</strong></a>
+                                    </span>
+                                @endif
+                            </h2>
+                            <p>
+                        </div>
+
+                        <div class="clearfix"></div>
+                   
+                    </div>                              
+                    <div class="postinfobot">
+                        <!-- comment author -->
+                       <div class="posted pull-left">
+                           <i class="fa fa-user-o"></i> {{ ucfirst($comment->name) }} &nbsp <i class="fa fa-clock-o"></i> {{ $comment->created_at->diffForHumans() }}
+                       </div>
+                        <!-- comment author -->
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                    
+                </div><!-- comment -->
                 
+                @endif
+                @endforeach
+                {{ $comments->links() }}
                 <!-- POST Idea -->
                 <div class="post">
                     {!! Form::open(['route'=>['addComment',$idea->id],'class'=>'form-horizontal m-b-30','files' => true,'name'=>'storeCommentForm']) !!}
@@ -152,13 +197,13 @@
                             </div>
 
                             <div class="pull-right postreply">
-                                
+                               
                                 <div class="pull-left"><a href="{{ URL::previous() }}" class="btn btn-info">Back</a> &nbsp <button type="submit" class="btn btn-primary">Add Comment</button></div>
                                 
                                 <div class="clearfix"></div>
                             </div>
 
-
+                         
                             <div class="clearfix"></div>
                         </div>
                     {{ Form::close() }}
@@ -186,83 +231,7 @@
 
 @section('extra_js')
 
-    <script src="{{ asset('js/plugins/tinymce/tinymce.min.js') }}"></script>
-    <script>
-        tinymce.init({
-            selector: '#editor',
-            width: "100%",
-            height: 200,
-
-            /* display statusbar */
-            menubar:false,
-            statusbar: false,
-            plugins: [
-                "advlist autolink link image lists charmap preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                "save table contextmenu directionality emoticons template paste textcolor"
-            ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image code | preview media fullpage | forecolor backcolor emoticons",
-            content_css: [
-            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-            '//www.tinymce.com/css/codepen.min.css'],
-
-            setup: function (editor) {
-            editor.addButton('mybutton', {
-              text: 'My button',
-              icon: false,
-              onclick: function () {
-                editor.insertContent('&nbsp;<b>It\'s my button!</b>&nbsp;');
-              }
-            });
-        }
-  
-
-            // enable title field in the Image dialog
-            image_title: true, 
-            // enable automatic uploads of images represented by blob or data URIs
-            automatic_uploads: false,
-            // URL of our upload handler (for more details check: https://www.tinymce.com/docs/configure/file-image-upload/#images_upload_url)
-            //images_upload_url: 'postAcceptor.php',
-            // here we add custom filepicker only to Image dialog
-            file_picker_types: 'image', 
-            // and here's our custom image picker
-            file_picker_callback: function(cb, value, meta) {
-            var input = document.createElement('input');
-            input.setAttribute('type', 'file');
-            input.setAttribute('name', 'image');
-            input.setAttribute('accept', 'image/*');
-            
-            // Note: In modern browsers input[type="file"] is functional without 
-            // even adding it to the DOM, but that might not be the case in some older
-            // or quirky browsers like IE, so you might want to add it to the DOM
-            // just in case, and visually hide it. And do not forget do remove it
-            // once you do not need it anymore.
-
-            input.onchange = function() {
-              var file = this.files[0];
-              
-              var reader = new FileReader();
-              reader.onload = function () {
-                // Note: Now we need to register the blob in TinyMCEs image blob
-                // registry. In the next release this part hopefully won't be
-                // necessary, as we are looking to handle it internally.
-                var id = 'blobid' + (new Date()).getTime();
-                var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-                var base64 = reader.result.split(',')[1];
-                var blobInfo = blobCache.create(id, file, base64);
-                blobCache.add(blobInfo);
-
-                // call the callback and populate the Title field with the file name
-                cb(blobInfo.blobUri(), { title: file.name });
-              };
-              reader.readAsDataURL(file);
-            };
-            
-            input.click();
-          }
-
-          
-        });
+   
 
         
     </script>

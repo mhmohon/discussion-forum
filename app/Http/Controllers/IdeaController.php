@@ -72,7 +72,7 @@ class IdeaController extends Controller
 
             ]);
         }
-        return redirect()->route('topicShow', $id)->withMsgsucess('Your Idea has been posted.');
+        return redirect()->route('topicShow', $id)->withMsgsuccess('Your Idea has been posted.');
 
         }else{
             return redirect()->back()->withInput();
@@ -143,7 +143,7 @@ class IdeaController extends Controller
 
             ]);
         }
-        return redirect()->route('topicShow', $topic_id)->withMsgsucess('Your Idea has been Updated.');
+        return redirect()->route('topicShow', $topic_id)->withMsgsuccess('Your Idea has been Updated.');
 
         }else{
             return redirect()->back()->withInput();

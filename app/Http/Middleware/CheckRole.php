@@ -23,6 +23,6 @@ class CheckRole
         }
 
 
-        return redirect()->back()->with('msgwarning',"You don't have permission for access that page");
+        return redirect()->back()->with('msgerror',"You don't have permission for access that page");
     }
 }

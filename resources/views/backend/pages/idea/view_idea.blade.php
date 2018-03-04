@@ -3,7 +3,7 @@
 @section('page_title',$title)
 
 @section('extra_css')
-    <!-- Bootstrap Material Datetime Picker Css -->
+    <!-- Bootstrap datatable Css -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 @endsection
@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Topic List
+                        Idea List
                     </h2>
                     
                 </div>
@@ -31,41 +31,36 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Title</th>
-                                    <th>Start Date</th>
-                                    <th>Closure Date</th>
-                                    <th>Final date</th>
+                                    <th>Posted by</th>
+                                    <th>Posted date</th>
+                                    <th>Views</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             
                             <tbody>
-                                @foreach ($topics as $key => $topic)
+                                @foreach ($ideas as $key => $idea)
                                 <tr>
                                     <td>{{ ($key+1) }}</td>
-                                    <td>{{ $topic->title }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($topic->start_date)->format('d M Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($topic->closure_date)->format('d M Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($topic->final_date)->format('d M Y') }}</td>
-                                    @if( $topic->status == 0)
+                                    <td>{{ $idea->title }}</td>
+                                    <td>{{ $idea->name }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($idea->created_at)->format('d M Y') }}</td>
+                                    <td>{{ $idea->view }}</td>
+                                    @if( $idea->status == 0)
                                         <td class="text-center">
                                             <span class="label label-warning"> Unpublished</span>
                                         </td>
-                                    @elseif($topic->status == 1)
+                                    @elseif($idea->status == 1)
                                         <td class="text-center">
                                             <span class="label label-success"> Published</span>
                                         </td>
                                     
-                                    @else
-                                        <td class="text-center">
-                                            <span class="label label-danger"> Closed</span>
-                                        </td>
                                     @endif
                                     <td style='width: 20%'>
                                             
-                                        <a href="{{ route('topicShow',$topic->id) }}" class="btn btn-sm btn-info"><i class="material-icons">remove_red_eye</i></a>
-                                        <a href="{{ route('editTopic',$topic->id) }}" class="btn btn-sm btn-warning"><i class="material-icons">mode_edit</i></a>
-                                        <a href="{{ route('topicDelete',$topic->id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this?')"><i class="material-icons">delete_forever</i></a>
+                                        <a href="{{ route('ideaShow',$idea->id) }}" class="btn btn-sm btn-info"><i class="material-icons">remove_red_eye</i></a>
+                                        <a href="{{ route('editIdea',$idea->id) }}" class="btn btn-sm btn-warning"><i class="material-icons">mode_edit</i></a>
                                     </td>
                                 </tr>
                                 @endforeach

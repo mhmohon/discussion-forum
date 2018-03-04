@@ -7,6 +7,7 @@ use View;
 use Auth;
 use Carbon\Carbon;
 use App\Topic;
+use App\Idea;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,9 +26,13 @@ class AppServiceProvider extends ServiceProvider
 
             $activeTopics = Topic::whereHas('idea', function($q){
                                     $q->where('user_id', \Auth::user()->id);
-                                })->get();
+                                })->latest()->limit(6)->get();
 
-            $view->with('commingTopics',$commingTopics)->with('activeTopics',$activeTopics);
+            $activeIdeas = Idea::whereHas('comment', function($q){
+                                    $q->where('user_id', \Auth::user()->id);
+                                })->latest()->limit(6)->get();
+
+            $view->with('commingTopics',$commingTopics)->with('activeTopics',$activeTopics)->with('activeIdeas',$activeIdeas);
         });
     }
 
