@@ -36,16 +36,24 @@
                             <div class="posted pull-left" style="padding-right: 10px">
                                 <i class="fa fa-clock-o"></i> Posted on : {{ \Carbon\Carbon::parse($topic->start_date)->format('d M Y') }}
                             </div>
-                            <div class="posted pull-left">
-                                <i class="fa fa-clock-o"></i> Closing time: {{ \Carbon\Carbon::parse($topic->end_date)->diffForHumans() }}
-                            </div>
+
+                            @if($topic->end_date < \Carbon\Carbon::now())
+                                
+                                <div class="posted pull-left">
+                                    <i class="fa fa-clock-o"></i> Closing time: <span style="color: #ff6743">Closed</span>
+                                </div>
+                            @else
+                                <div class="posted pull-left">
+                                    <i class="fa fa-clock-o"></i> Closing time: {{ \Carbon\Carbon::parse($topic->end_date)->diffForHumans() }}
+                                </div>
+                            @endif
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="postinfo pull-left">
                         <div class="comments">
                             <div class="commentbg">
-                                560
+                                {{ number_format($topic->idea->count()) }}
                                 <div class="mark"></div>
                             </div>
 

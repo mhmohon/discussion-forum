@@ -18,13 +18,17 @@ require __DIR__ . '/web/backend_topic.php';
 
 require __DIR__ . '/web/idea.php';
 
+require __DIR__ . '/web/comment.php';
+
 
 Auth::routes();
 
 
 Route::get('/forum', 'HomeController@index')->name('home');
 
-Route::get('/forum/topic/view&topic_id={id}', 'HomeController@show')->name('topicShow');
+Route::get('/forum/topic/view&topic_id={id}', 'HomeController@topicShow')->name('topicShow');
+
+Route::get('/forum/topic/idea/view&idea_id={id}', 'HomeController@ideaShow')->name('ideaShow');
 
 Route::get('/', function () {
     return redirect()->route('home');

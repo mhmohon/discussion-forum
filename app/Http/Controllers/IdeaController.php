@@ -50,7 +50,7 @@ class IdeaController extends Controller
         $user_id = \Auth::user()->id;
         if(request('postas') == 'realuser'){
 
-            $name = \Auth::user()->staff->first_name. ' '.\Auth::user()->staff->last_name;
+            $name = \Auth::user()->student->first_name. ' '.\Auth::user()->student->last_name;
             Idea::create([
                 'title' => request('idea_title'),
                 'description' => request('idea_detail'),
@@ -88,7 +88,7 @@ class IdeaController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -97,9 +97,13 @@ class IdeaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($topic_id, $idea_id)
     {
-        //
+        $idea = Idea::find($idea_id);
+        $topic = Topic::find($topic_id);
+        
+        return view('frontend.pages.idea.edit_idea', compact('topic','idea'));
+
     }
 
     /**
@@ -109,9 +113,41 @@ class IdeaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $topic_id, $idea_id)
     {
-        //
+        $validate = $this->validate(request(),[
+            'idea_title' => 'required|min:3',
+            'idea_detail' => 'required|min:3',
+            'agree' => 'required',
+            'postas' => 'required',
+            
+        ]);
+
+        if($validate){
+
+        $user_id = \Auth::user()->id;
+        if(request('postas') == 'realuser'){
+
+            $name = \Auth::user()->student->first_name. ' '.\Auth::user()->student->last_name;
+            Idea::find($idea_id)->update([
+                'title' => request('idea_title'),
+                'description' => request('idea_detail'),
+                'name' => $name,
+            ]);
+
+        }elseif(request('postas') == 'anynomous'){
+            Idea::find($idea_id)->update([
+                'title' => request('idea_title'),
+                'description' => request('idea_detail'),
+                'name' => 'anynomous',
+
+            ]);
+        }
+        return redirect()->route('topicShow', $topic_id)->withMsgsucess('Your Idea has been Updated.');
+
+        }else{
+            return redirect()->back()->withInput();
+        }
     }
 
     /**

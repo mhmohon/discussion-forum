@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use View;
+use Auth;
 use Carbon\Carbon;
 use App\Topic;
 
@@ -22,7 +23,11 @@ class AppServiceProvider extends ServiceProvider
 
             $commingTopics = Topic::where('start_date', '>', $currentDate)->latest()->limit(10)->get();
 
-            $view->with('commingTopics',$commingTopics);
+            $activeTopics = Topic::whereHas('idea', function($q){
+                                    $q->where('user_id', \Auth::user()->id);
+                                })->get();
+
+            $view->with('commingTopics',$commingTopics)->with('activeTopics',$activeTopics);
         });
     }
 

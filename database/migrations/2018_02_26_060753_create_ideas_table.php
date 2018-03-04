@@ -18,6 +18,7 @@ class CreateIdeasTable extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('name')->nullable();
+            $table->integer('view')->default('0');
             $table->tinyInteger('status')->default('1');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('topic_id');

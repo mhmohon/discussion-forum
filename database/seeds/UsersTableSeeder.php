@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Staff;
+use App\Student;
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -67,6 +68,7 @@ class UsersTableSeeder extends Seeder
             'phone' => '01521207099',
             'gender' => 'male',
             'user_id' => $user->id,
+            'dep_id' => '1',
             
         ]);
         

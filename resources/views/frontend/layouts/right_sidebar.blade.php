@@ -1,7 +1,5 @@
 <div class="col-lg-4 col-md-4">
 
-
-
     <!-- -->
     <div class="sidebarblock">
         <h3>Up Coming Topics </h3>
@@ -25,29 +23,17 @@
         
     </div>
 
+    @if(checkPermission(['student']))
 
-       <div class="sidebarblock">
-        <h3>My Active Threads</h3>
-        <div class="divline"></div>
-        <div class="blocktxt">
-            <a href="#">This Dock Turns Your iPhone Into a Bedside Lamp</a>
-        </div>
-        <div class="divline"></div>
-        <div class="blocktxt">
-            <a href="#">Who Wins in the Battle for Power on the Internet?</a>
-        </div>
-        <div class="divline"></div>
-        <div class="blocktxt">
-            <a href="#">Sony QX10: A Funky, Overpriced Lens Camera for Your Smartphone</a>
-        </div>
-        <div class="divline"></div>
-        <div class="blocktxt">
-            <a href="#">FedEx Simplifies Shipping for Small Businesses</a>
-        </div>
-        <div class="divline"></div>
-        <div class="blocktxt">
-            <a href="#">Loud and Brave: Saudi Women Set to Protest Driving Ban</a>
-        </div>
-    </div>
+        @foreach($activeTopics as $activeTopic)
+           <div class="sidebarblock">
+                <h3>My Active Topics</h3>
+                <div class="divline"></div>
+                <div class="blocktxt">
+                    <a href="{{ route('topicShow',$activeTopic->id) }}">{{ $activeTopic->title }}</a>
+                </div>
+            </div>
+        @endforeach
+    @endif
     
 </div>

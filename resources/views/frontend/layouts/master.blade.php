@@ -10,7 +10,7 @@
 			<!-- Contain page navber -->
 			@include ('frontend.layouts.navbar')
 
-			<section class="content">
+			<section class="content" style="min-height: 500px;">
 				
 				<!-- layouts for Notificaiton -->
 	            @include ('frontend.layouts.partial.message')

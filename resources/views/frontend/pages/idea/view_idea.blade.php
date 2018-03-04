@@ -1,12 +1,12 @@
 @extends ('frontend.layouts.master')
 
-@section('page_title', 'View Topic')
+@section('page_title', 'View Idea')
 @section('main_content')
 
     <div class="container">
         <div class="row">
             <div class="col-lg-8 breadcrumbf">
-                <a href="#">UOG Forum</a> <span class="diviver">&gt;</span> <a href="{{ route('home') }}">General Discussion</a> <span class="diviver">&gt;</span> <a href="#">Topic Details</a>
+                <a href="{{ route('home') }}">UOG Forum</a> <span class="diviver">&gt;</span> <a href="{{ URL::previous() }}">Topic discussion</a> <span class="diviver">&gt;</span> <a>Idea Details</a>
             </div>
         </div>
     </div>
@@ -21,26 +21,33 @@
                     <div class="topwrap">
                         <div class="userinfo pull-left">
                             <div class="avatar">
-                                <img src="{{ asset('photos/icon/topic.png') }}" alt="" />
+                                <img src="{{ asset('photos/icon/idea.png') }}" alt="" />
                             </div>
    
                         </div>
-                        <div class="posttext pull-left">
-                            <h2>{{ $topic->title }}</h2>
-                            <p>{{ $topic->description }}</p>
+                        <div class="posttext idea-text pull-left">
+                            <h2>{{ $idea->title }}
+                                @if(\Auth::user()->id == $idea->user_id)
+                                    <span class="pull-right">
+                                        <a href="{{ route('EditIdea', [$idea->topic_id, $idea->id]) }}" class="btn btn-danger">Edit</a>
+                                    </span>
+                                @endif
+                            </h2>
+                            <p>{!! $idea->description !!}</p>
                         </div>
                         <div class="clearfix"></div>
                     </div>                              
                     <div class="postinfobot">
 
-                        <div class="posted pull-left"><i class="fa fa-clock-o"></i>  Posted {{ \Carbon\Carbon::parse($topic->start_date)->diffForHumans() }}</div>
+                        <div class="posted pull-left">
+                            <i class="fa fa-user-o"></i> {{ $idea->name }} &nbsp <i class="fa fa-clock-o"></i>  Posted on : {{ \Carbon\Carbon::parse($idea->start_date)->format('d M Y') }}</div>
                         
-                        @if(checkPermission(['student']))
+                        
                         <div class="next pull-right">                                        
                             <a href="#"><i class="fa fa-share"></i></a>
 
                         </div>
-                        @endif
+                      
 
                         <div class="clearfix"></div>
                     </div>
@@ -56,58 +63,37 @@
                     <div class="clearfix"></div>
                 </div>
                 
-                @foreach($ideas as $idea) 
+                @foreach($comments as $comment) 
                 <!-- Idea -->
                 <div class="post">
                     <div class="topwrap">
-                        <div class="userinfo pull-left">
+                        <div class="comment-logo userinfo pull-left">
                             <div class="avatar">
-                                <img src="{{ asset('photos/icon/idea.png') }}" alt="" />
+                                <img src="{{ asset('photos/icon/comment.png') }}" alt="" />
                             </div>
    
                         </div>
-                        <div class="posttext pull-left">
-                            <h2>
-                                <a href="{{ route('ideaShow', $idea->id) }}">{{ $idea->title }}</a>
-                                @if(\Auth::user()->id == $idea->user_id)
+                        <div class="posttext idea-text pull-left">
+                            <p>
+                                {{ $comment->description }}
+                                @if(\Auth::user()->id == $comment->user_id)
                                     <span class="pull-right">
-                                        <a href="{{ route('EditIdea', [$idea->topic_id, $idea->id]) }}" class="btn btn-danger">Edit</a>
+                                        <a href=""><strong>Edit</strong></a>
                                     </span>
                                 @endif
                             </h2>
-                            <hr>
-                            <p>{!! $idea->description !!}</p>
-                        </div>
-
-                        <!-- idea info -->
-                        <div class="postinfo pull-right">
-                            <div class="comments">
-                                <div class="commentbg">
-                                    {{ number_format($idea->comment->count()) }}
-                                    <div class="mark"></div>
-                                </div>
-
-                            </div>
-                            <div class="views"><i class="fa fa-eye"></i> {{ number_format($idea->view) }}</div>
-                                                           
+                            <p>
                         </div>
 
                         <div class="clearfix"></div>
-                    <!-- idea info -->
+                   
                     </div>                              
                     <div class="postinfobot">
-                        <!-- idea title -->
+                        <!-- comment author -->
                        <div class="posted pull-left">
-                           <i class="fa fa-user-o"></i> {{ $idea->name }} &nbsp <i class="fa fa-clock-o"></i> {{ $idea->created_at->diffForHumans() }}
+                           <i class="fa fa-user-o"></i> {{ ucfirst($comment->name) }} &nbsp <i class="fa fa-clock-o"></i> {{ $comment->created_at->diffForHumans() }}
                        </div>
-                        <!-- idea title -->
-
-                        <!-- Like / dislike -->
-                        <div class="likeblock pull-right">
-                            <a href="#" class="up"><i class="fa fa-thumbs-o-up"></i>10</a>
-                            <a href="#" class="down"><i class="fa fa-thumbs-o-down"></i>1</a>
-                        </div>
-                        <!-- Like / dislike -->
+                        <!-- comment author -->
 
                         <div class="clearfix"></div>
                     </div>
@@ -117,15 +103,67 @@
 
                 @endforeach
                 
-                @if(checkPermission(['student']))
-                <div class="post pull-left">
-                    <div class="postreply">
-                            
-                        <div class="pull-left"><a href="{{ route('addIdea', $topic->id) }}" class="btn btn-primary">Post a Idea</a></div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-                @endif
+                <!-- POST Idea -->
+                <div class="post">
+                    {!! Form::open(['route'=>['addComment',$idea->id],'class'=>'form-horizontal m-b-30','files' => true,'name'=>'storeCommentForm']) !!}
+                        <div class="topwrap">
+                            <div class="userinfo pull-left">
+                                
+
+                                <div class="icons-idea">
+                                    <div class="postreply">Post a Comment</div>
+                                </div>
+                            </div>
+                            <div class="posttext idea-text pull-left">
+                                
+                                <div class="form-group {{ $errors->has('comment_detail') ? ' has-error' : '' }}">
+                                    <div class="form-line">
+                                        <textarea id="editor" name="comment_detail" class="form-control" placeholder="Type Your comment" 
+                                        value="{{ old('comment_detail') }}" data-validation="length" data-validation-length="3-255" 
+                                        data-validation-error-msg="Comment has to be an alphanumeric value (3-255 chars)"></textarea>
+                                        @if ($errors->has('comment_detail'))
+                                            <span class="text-danger help-block">
+                                                <block>{{ $errors->first('comment_detail') }}</block>
+                                            </span>
+                                        @endif  
+                                    </div>
+                                </div>
+                                <div class="form-group {{ $errors->has('comment_detail') ? ' has-error' : '' }}">
+                                    <div class="form-line">
+                                        <label for="postas" class="form-lbl">Post As: </label>
+                                        <div class="radio-inline">
+                                          <label><input type="radio" checked name="postas" value="realuser">Real user</label>
+                                        </div>
+                                        <div class="radio-inline">
+                                          <label><input type="radio" name="postas" value="anynomous">Anynomous</label>
+                                        </div>  
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="clearfix"></div>
+                        </div>                              
+                        <div class="postinfobot">
+
+                            <div class="pull-left">
+                                <input type="checkbox" name="agree" data-validation="required" data-validation-error-msg="You have to agree to our terms" id="note" >
+                                <label for="note" class="form-lbl"> I agree to the <a href="">Terms and Conditions</a></label>
+                            </div>
+
+                            <div class="pull-right postreply">
+                                
+                                <div class="pull-left"><a href="{{ URL::previous() }}" class="btn btn-info">Back</a> &nbsp <button type="submit" class="btn btn-primary">Add Comment</button></div>
+                                
+                                <div class="clearfix"></div>
+                            </div>
+
+
+                            <div class="clearfix"></div>
+                        </div>
+                    {{ Form::close() }}
+                </div><!-- POST Idea-->
+                
             </div>
            
             <!-- Left Sidebar -->

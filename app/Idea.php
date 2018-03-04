@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Idea extends Model
 {
     protected $fillable = [
-        'title', 'description','name','status','user_id','topic_id'
+        'title', 'description','name','view','status','user_id','topic_id'
     ];
 
     public function topic()
@@ -18,5 +18,15 @@ class Idea extends Model
     public function user()
     {
     	return $this->belongsTo(User::class);
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function reaction()
+    {
+        return $this->hasMany(Reaction::class);
     }
 }

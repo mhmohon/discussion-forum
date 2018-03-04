@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Topic;
 use App\Idea;
+use App\Comment;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -35,16 +36,29 @@ class HomeController extends Controller
         return view('frontend.pages.home', compact('latestTopics'));
     }
 
-    public function show($id)
+    public function topicShow($id)
     {   
         $topic = Topic::find($id); // finding the post
         
-        $ideas = Idea::where('topic_id', $id)->paginate(5);
+        $ideas = Idea::where('topic_id', $id)->latest()->paginate(5);
 
         if($topic){
             
             $topic->increment('view');
         }
         return view('frontend.pages.view_topic', compact('topic','ideas'));
+    }
+
+    public function ideaShow($id)
+    {   
+        $idea = Idea::find($id); // finding the post
+        
+        $comments = Comment::where('idea_id', $id)->latest()->paginate(10);
+
+        if($idea){
+            
+            $idea->increment('view');
+        }
+        return view('frontend.pages.idea.view_idea', compact('idea','comments'));
     }
 }

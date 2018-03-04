@@ -34,21 +34,17 @@ class User extends Authenticatable
 
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->hasOne(Student::class);
     }
 
-    public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
 
     public function idea()
     {
-        $this->hasMany(Idea::class);
+        return $this->hasMany(Idea::class);
     }
 
     public function comment()
     {
-        $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class);
     }
 }

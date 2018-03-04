@@ -1,6 +1,6 @@
 @extends ('frontend.layouts.master')
 
-@section('page_title', 'Add Idea')
+@section('page_title', 'Edit Idea')
 
 @section('extra_css')
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
@@ -14,7 +14,7 @@
 	<div class="container">
         <div class="row">
             <div class="col-lg-8 breadcrumbf">
-                <a href="{{ route('home') }}">UOG Forum</a> <span class="diviver">&gt;</span> <a href="{{ route('home') }}">Topic Details</a> <span class="diviver">&gt;</span> <a href="#">Add Idea</a>
+                <a href="{{ route('home') }}">UOG Forum</a> <span class="diviver">&gt;</span> <a href="{{ URL::previous() }}">Topic Details</a> <span class="diviver">&gt;</span> <a>Edit Idea</a>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
 				
 				 <!-- POST Idea -->
 	            <div class="post">
-	                {!! Form::open(['route'=>['storeIdea',$topic->id],'class'=>'form-horizontal m-b-30','files' => true,'name'=>'storeIdeaForm']) !!}
+	                {!! Form::open(['route'=>['updateIdea',$topic->id,$idea->id],'class'=>'form-horizontal m-b-30','files' => true,'name'=>'storeIdeaForm']) !!}
 	                    <div class="topwrap">
 	                        <div class="userinfo pull-left">
 	                            
@@ -64,7 +64,7 @@
 	                            <div class="form-group {{ $errors->has('idea_title') ? ' has-error' : '' }}">
 	                                <div class="form-line">
 	                                    <input type="text" id="idea_title" name="idea_title" class="form-control" placeholder="Type Idea title" 
-	                                    value="{{ old('idea_title') }}" data-validation="length" data-validation-length="3-255" 
+	                                    value="{{ $idea->title }}" data-validation="length" data-validation-length="3-255" 
 	                                    data-validation-error-msg="Topic name has to be an alphanumeric value (3-255 chars)">
 	                                    @if ($errors->has('idea_title'))
 	                                        <span class="text-danger help-block">
@@ -77,7 +77,7 @@
 	                                <div class="form-line">
 	                                    <textarea id="editor" name="idea_detail" class="form-control" placeholder="Type Idea Details" 
 	                                    value="{{ old('idea_detail') }}" data-validation="length" data-validation-length="3-255" 
-	                                    data-validation-error-msg="Topic name has to be an alphanumeric value (3-255 chars)"></textarea>
+	                                    data-validation-error-msg="Topic name has to be an alphanumeric value (3-255 chars)">{{ $idea->description }}</textarea>
 	                                    @if ($errors->has('idea_detail'))
 	                                        <span class="text-danger help-block">
 	                                            <block>{{ $errors->first('idea_detail') }}</block>
@@ -110,7 +110,7 @@
 
 	                        <div class="pull-right postreply">
 	                            
-	                            <div class="pull-left"><button type="submit" class="btn btn-primary">Post Idea</button></div>
+	                            <div class="pull-left"><a href="{{ URL::previous() }}" class="btn btn-info">Back</a> &nbsp <button type="submit" class="btn btn-primary">Update Idea</button></div>
 	                            <div class="clearfix"></div>
 	                        </div>
 
@@ -142,6 +142,7 @@
             $('#editor').froalaEditor({
             	heightMin: 300,
       			heightMax: 500,
+
                 toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'fontFamily', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', '|', 'spellChecker', 'html', '|', 'undo', 'redo']
             });
 

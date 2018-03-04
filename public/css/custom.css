@@ -431,14 +431,19 @@ td.chbox {
 .post .wrap-ut {
     width: 85%;
 }
-
+.post .comment-logo{
+	
+	padding: 10px 0 15px 8px !important;
+}
 .post .userinfo {
     width: 15%;
     padding: 28px 0 15px 8px;
 }
-
+.post .idea-text{
+	 width: 84% !important;
+}
 .post .posttext {
-    width: 85%;
+    width: 70%;
     padding-right: 30px;
     padding-top: 20px;
     padding-bottom: 15px;
@@ -590,7 +595,7 @@ td.chbox {
 }
 
 .postinfobot .posted {
-    width: 300px;
+   
     margin-left: 18px;
     font-size: 12px;
     color: #595a5a;
@@ -1004,7 +1009,7 @@ a.down:hover {
 		max-height: 50px;
 	}
     .post .posttext {
-        width: 86%;
+        width: 71%;
         padding-right: 15px;
         padding-top: 15px;
         padding-bottom: 15px;
@@ -1083,7 +1088,7 @@ a.down:hover {
     }
 
     .postinfobot .posted {
-        width: 200px;
+        width: 100%;
         margin: 0;
     }
 

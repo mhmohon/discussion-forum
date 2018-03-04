@@ -11,8 +11,8 @@ class Department extends Model
     	return static::where('status', 1);
     }
 
-    public function user()
+    public function student()
     {
-    	$this->hasMany(User::class);
+    	return $this->hasMany(Student::class);
     }
 }

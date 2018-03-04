@@ -12,7 +12,7 @@ class Topic extends Model
 
     public function idea()
     {
-    	$this->hasMany(Idea::class);
+    	return $this->hasMany(Idea::class);
     }
 
 
