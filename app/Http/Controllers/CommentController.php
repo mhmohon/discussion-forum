@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Notifications\NotifyAuthor;
+use App\User;
 use App\Idea;
 use App\Comment;
 
@@ -41,7 +43,7 @@ class CommentController extends Controller
             'agree' => 'required',
             'postas' => 'required',
         ]);
-
+        
         if($validate){
 
         $user_id = \Auth::user()->id;
@@ -54,7 +56,7 @@ class CommentController extends Controller
                 $name = \Auth::user()->staff->first_name. ' '.\Auth::user()->staff->last_name;
             }
             
-            Comment::create([
+            $comment = Comment::create([
                 'description' => request('comment_detail'),
                 'name' => $name,
                 'status' => '1',
@@ -64,7 +66,7 @@ class CommentController extends Controller
             ]);
 
         }elseif(request('postas') == 'anynomous'){
-            Comment::create([
+            $comment = Comment::create([
                 'description' => request('comment_detail'),
                 'name' => 'anynomous',
                 'status' => '1',
@@ -73,6 +75,12 @@ class CommentController extends Controller
 
             ]);
         }
+
+        //send email when comment to idea
+        $idea = Idea::find($id);
+        $author = User::find($idea->user_id);
+        \Notification::send($author, new NotifyAuthor($idea));
+        //send email when comment to idea
         return redirect()->route('ideaShow', $id)->withMsgsuccess('Your comment has been posted sucessfully.');
 
         }else{

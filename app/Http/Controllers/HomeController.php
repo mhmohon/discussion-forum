@@ -32,8 +32,8 @@ class HomeController extends Controller
         $latestTopics = Topic::where('start_date', '<=', $currentDate)
                                 ->where('status', 1)
                                 ->latest()->paginate(5);
-        
-        return view('frontend.pages.home', compact('latestTopics'));
+
+        return view('frontend.pages.home', compact('latestTopics','ideaCount'));
     }
 
     public function topicShow($id)
@@ -53,15 +53,18 @@ class HomeController extends Controller
 
     public function ideaShow($id)
     {   
-        $idea = Idea::find($id); // finding the post
-        
-        $comments = Comment::where('idea_id', $id)->latest()->paginate(10);
+        $idea = Idea::find($id); // finding the idea
 
-        if($idea){
-            
+        if($idea->status == '1'){
+
+            $comments = Comment::where('idea_id', $id)->latest()->paginate(10);
             $idea->increment('view');
+            
+            return view('frontend.pages.idea.view_idea', compact('idea','comments'));
+        }else{
+            return redirect('home')->withMsginfo('This idea is not yet approved');;
         }
-        return view('frontend.pages.idea.view_idea', compact('idea','comments'));
+        
     }
 
     public function myDashboard()

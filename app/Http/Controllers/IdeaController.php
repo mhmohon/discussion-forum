@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Notifications\NotifyQac;
 use App\Topic;
 use App\Idea;
 use App\User;
+use App\DepartmentHead;
 class IdeaController extends Controller
 {
     /**
@@ -16,7 +18,13 @@ class IdeaController extends Controller
     public function index($id)
     {
         $topic =  Topic::find($id);
-        return view('frontend.pages.idea.create_idea', compact('topic'));
+        
+        if($topic->closure_date >= \Carbon\Carbon::now()){
+
+            return view('frontend.pages.idea.create_idea', compact('topic'));
+        }else{
+            return redirect()->back()->withMsgerror('This Topic is closed, no new idea is allowed');
+        }
     }
 
     /**
@@ -51,7 +59,7 @@ class IdeaController extends Controller
         if(request('postas') == 'realuser'){
 
             $name = \Auth::user()->student->first_name. ' '.\Auth::user()->student->last_name;
-            Idea::create([
+            $idea = Idea::create([
                 'title' => request('idea_title'),
                 'description' => request('idea_detail'),
                 'name' => $name,
@@ -62,7 +70,7 @@ class IdeaController extends Controller
             ]);
 
         }elseif(request('postas') == 'anynomous'){
-            Idea::create([
+            $idea = Idea::create([
                 'title' => request('idea_title'),
                 'description' => request('idea_detail'),
                 'name' => 'anynomous',
@@ -72,11 +80,20 @@ class IdeaController extends Controller
 
             ]);
         }
+        
+        $user_dep = \Auth::user()->student->dep_id;
+        $depertment = DepartmentHead::find($user_dep);
+
+        $user = User::find($depertment->user_id);
+        \Notification::send($user, new NotifyQac());
+
         return redirect()->route('topicShow', $id)->withMsgsuccess('Your Idea has been posted, Waiting for Admin Approval');
 
         }else{
             return redirect()->back()->withInput();
         }
+
+
 
     }
 

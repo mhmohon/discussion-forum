@@ -52,8 +52,16 @@
                     </div>
                     <div class="postinfo pull-left">
                         <div class="comments">
+                            @php
+                                
+                                $ideaCount = \App\Idea::where('topic_id', $topic->id)
+                                    ->where('status', 1)
+                                    ->get();
+ 
+                            @endphp
+                            
                             <div class="commentbg">
-                                {{ number_format($topic->idea->count()) }}
+                                {{ number_format($ideaCount->count()) }}
                                 <div class="mark"></div>
                             </div>
 

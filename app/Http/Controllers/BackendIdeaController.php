@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Notifications\NotifyAuthonApprove;
 use App\Idea;
-
+use App\User;
+use App\DepartmentHead;
 class BackendIdeaController extends Controller
 {
     /**
@@ -53,11 +55,23 @@ class BackendIdeaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         Idea::find($id)->update([
             
             'status' => request('status')
         ]);
 
+        if(request('status') == '1'){
+            $idea = Idea::find($id);
+            $author = User::find($idea->user_id);
+            $depertment = DepartmentHead::find($author->student->dep_id);
+
+            $user = User::find($depertment->user_id);
+            //dd($author);
+            \Notification::send($author, new NotifyAuthonApprove($idea));
+            \Notification::send($user, new NotifyAuthonApprove($idea));
+
+        }
         return redirect()->route('viewIdea')->withMsgsuccess('Idea updated successfully');
     }
 

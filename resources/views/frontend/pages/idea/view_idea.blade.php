@@ -42,11 +42,14 @@
                         <div class="posted pull-left">
                             <i class="fa fa-user-o"></i> {{ $idea->name }} &nbsp <i class="fa fa-clock-o"></i>  Posted on : {{ \Carbon\Carbon::parse($idea->start_date)->format('d M Y') }}</div>
                         
-                        
-                        <div class="next pull-right">                                        
-                            <a href="#"><i class="fa fa-share"></i></a>
+                        @if($idea->topic->end_date >= \Carbon\Carbon::now())
 
-                        </div>
+                            <div class="next pull-right">                                        
+                                <a href="#"><i class="fa fa-share"></i></a>
+
+                            </div>
+
+                        @endif
                       
 
                         <div class="clearfix"></div>
@@ -147,7 +150,10 @@
                 
                 @endif
                 @endforeach
+
                 {{ $comments->links() }}
+
+                @if($idea->topic->end_date >= \Carbon\Carbon::now())
                 <!-- POST Idea -->
                 <div class="post">
                     {!! Form::open(['route'=>['addComment',$idea->id],'class'=>'form-horizontal m-b-30','files' => true,'name'=>'storeCommentForm']) !!}
@@ -208,6 +214,12 @@
                         </div>
                     {{ Form::close() }}
                 </div><!-- POST Idea-->
+                @else
+                    <div class="pull-left" style=" padding-bottom: 20px; ">
+                        <a href="{{ URL::previous() }}" class="btn btn-danger" style="padding: 9px;">Topic is Closed, Can not post any idea</a>
+                        <a href="{{ URL::previous() }}" class="btn btn-info" style="padding-bottom: 12px;">Back</a>
+                    </div>
+                @endif
                 
             </div>
            
@@ -216,23 +228,6 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-xs-12">
-                
-                <div class="pull-left">
-                    
-                </div>
-                
-            </div>
-        </div>
-    </div>
+    
 @endsection
 
-@section('extra_js')
-
-   
-
-        
-    </script>
-@endsection

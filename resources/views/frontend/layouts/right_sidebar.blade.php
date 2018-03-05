@@ -7,7 +7,7 @@
         @if($commingTopics->count())
             @foreach($commingTopics as $topic)
                 <div class="blocktxt">
-                    <a href="#" class="pull-left">{{ $topic->title }}</a><br>
+                    <a href="{{ route('topicShow',$topic->id) }}" class="pull-left">{{ $topic->title }}</a><br>
                      <div class="posted pull-left">
                         <i class="fa fa-clock-o"></i> Opening time: {{ \Carbon\Carbon::parse($topic->start_date)->diffForHumans() }}
                     </div>

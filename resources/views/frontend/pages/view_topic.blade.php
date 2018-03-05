@@ -44,10 +44,14 @@
                         <div class="posted pull-left"><i class="fa fa-clock-o"></i>  Posted {{ \Carbon\Carbon::parse($topic->start_date)->diffForHumans() }}</div>
                         
                         @if(checkPermission(['student']))
-                        <div class="next pull-right">                                        
-                            <a href="{{ route('addIdea', $topic->id) }}"><i class="fa fa-share"></i></a>
 
-                        </div>
+                        @if($topic->closure_date >= \Carbon\Carbon::now() &&  $topic->start_date <= \Carbon\Carbon::now())
+
+                            <div class="next pull-right">                                         
+                                <a href="{{ route('addIdea', $topic->id) }}"><i class="fa fa-share"></i></a>
+
+                            </div>
+                        @endif
                         @endif
 
                         <div class="clearfix"></div>
@@ -151,8 +155,23 @@
                 @if(checkPermission(['student']))
                 <div class="post pull-left">
                     <div class="postreply">
+                        
+                        @if($topic->closure_date >= \Carbon\Carbon::now() &&  $topic->start_date <= \Carbon\Carbon::now())
+                            <div class="pull-left"><a href="{{ route('addIdea', $topic->id) }}" class="btn btn-primary">Post a Idea</a>&nbsp </div>
+                        @else
+                            <div class="pull-left">
+                                <a href="{{ URL::previous() }}" class="btn btn-danger" style="padding: 9px;">Not Available</a>&nbsp
+                            </div>
+                        @endif
+                        <div class="pull-left"><a href="{{ URL::previous() }}" class="btn btn-info" style="padding-bottom: 12px;">Back</a></div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                @else
+                <div class="post pull-left">
+                    <div class="postreply">
                             
-                        <div class="pull-left"><a href="{{ route('addIdea', $topic->id) }}" class="btn btn-primary">Post a Idea</a></div>
+                        <div class="pull-left"><a href="{{ URL::previous() }}" class="btn btn-primary">Back</a></div>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -164,17 +183,7 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-xs-12">
-                
-                <div class="pull-left">
-                    
-                </div>
-                
-            </div>
-        </div>
-    </div>
+    
 @endsection
 
 @section('extra_js')

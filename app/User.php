@@ -27,6 +27,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function depHead()
+    {
+        return $this->hasOne(departmentHead::class);
+    }
+
     public function staff()
     {
         return $this->hasOne(Staff::class);
