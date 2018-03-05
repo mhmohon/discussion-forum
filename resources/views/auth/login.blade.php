@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -59,11 +58,12 @@
                         <div class="form-line">
                             <input type="password" name="password" value="" placeholder="Password" id="input-password" class="form-control" /> 
 
-                            @if ($errors->has('password'))
-                              <span class="help-block">
-                              <block>{{ $errors->first('password') }}</block></span>
-                            @endif
+                            
                         </div>
+                        @if ($errors->has('password'))
+                          <span class="help-block">
+                          <block>{{ $errors->first('password') }}</block></span>
+                        @endif
                     </div>
                     <div class="row">
                         <div class="col-xs-8 p-t-5">

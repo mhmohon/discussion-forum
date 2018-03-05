@@ -72,7 +72,7 @@ class IdeaController extends Controller
 
             ]);
         }
-        return redirect()->route('topicShow', $id)->withMsgsuccess('Your Idea has been posted.');
+        return redirect()->route('topicShow', $id)->withMsgsuccess('Your Idea has been posted, Waiting for Admin Approval');
 
         }else{
             return redirect()->back()->withInput();

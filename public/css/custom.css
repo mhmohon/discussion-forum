@@ -546,9 +546,26 @@ td.chbox {
 
 
 
+.panel-counter .pnl-head {
+	font-size: 25px;
+	color: #2C3E50;
+    border-color: #ecf0f1;
+	padding: 10px 15px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+	text-align: center;
+}
 
+.panel-counter .pnl-body{
+	font-size: 3em;
+    font-weight: 700;
+	text-align: center;
+}
 
-
+.profile-latest-items h3 {
+	    margin-bottom: 30px;
+    text-align: center;
+}
 
 /*-----------------------------------------------------------------*/
 /* #02_topic.html - TOPIC */

@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 breadcrumbf">
-                <a href="#">UOG Forum</a> <span class="diviver">&gt;</span> <a href="{{ route('home') }}">General Discussion</a> <span class="diviver">&gt;</span> <a href="#">Topic Details</a>
+                <a href="{{ route('home') }}">UOG Forum</a> <span class="diviver">&gt;</span> <a href="{{ route('home') }}">General Discussion</a> <span class="diviver">&gt;</span> <a href="#">Topic Details</a>
             </div>
         </div>
     </div>
@@ -56,14 +56,14 @@
                 
 
                 <div class="paginationf">
-                    <div class="pull-left"><a href="#" class="prevnext"><i class="fa fa fa-comments"></i></a></div>
+                    <div class="pull-left"><a class="prevnext"><i class="fa fa fa-comments"></i>All Idea</a></div>
                     <div class="pull-left">
                        
                     </div>
                     
                     <div class="clearfix"></div>
                 </div>
-                
+                @if($ideas->count())
                 @foreach($ideas as $idea) 
                 <!-- Idea -->
                 <div class="post">
@@ -121,8 +121,32 @@
 
                     
                 </div><!-- Idea -->
-
+                
+                
                 @endforeach
+                @else
+                    <div class="post">
+                       
+                    <div class="topwrap">
+                        <div class="userinfo pull-left">
+                            <div class="avatar">
+                                <img src="{{ asset('photos/icon/idea.png') }}" alt="" />
+                            </div>
+   
+                        </div>
+                        <div class="posttext pull-left">
+                            <h2>
+                               No Idea has been posted on this topic.
+                            </h2>
+                            <hr>
+                        </div>
+
+                        
+                        <div class="clearfix"></div>
+                    <!-- idea info -->
+                    </div> 
+                    </div>
+                @endif
                 
                 @if(checkPermission(['student']))
                 <div class="post pull-left">

@@ -1,4 +1,4 @@
-<div class="headernav">
+<div class="headernav" style="background-color: #18BC9C;">
     <div class="container">
         <div class="row">
             <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="index.html"><img src="images/logo.jpg" alt=""  /></a></div>
@@ -28,14 +28,16 @@
 
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ Auth::user()->staff->first_name . ' ' . Auth::user()->staff->last_name }}</a></li>
                         <div class="divline"></div>
-                        <li role="presentation"><a href="{{ route('dashboardHome') }}" role="menuitem" tabindex="-2" href="#">Go to dashboard</a></li>
-                        
-                        @endif
-
-                        @if(checkPermission(['student']))
-                        
+                        @else
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ Auth::user()->student->first_name . ' ' . Auth::user()->student->last_name }}</a></li>
-                            
+                        @endif
+                        
+                        @if(checkPermission(['admin','qac','qam']))
+                        
+                        <li role="presentation"><a href="{{ route('dashboardHome') }}" role="menuitem" tabindex="-2" >Go to dashboard</a></li>
+
+                        @else
+                        <li role="presentation"><a href="{{ route('myDashboardShow') }}" role="menuitem" tabindex="-2">My dashboard</a></li>
                         @endif
 
                         <div class="divline"></div>

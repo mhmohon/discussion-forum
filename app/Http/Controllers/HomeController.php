@@ -40,7 +40,9 @@ class HomeController extends Controller
     {   
         $topic = Topic::find($id); // finding the post
         
-        $ideas = Idea::where('topic_id', $id)->latest()->paginate(5);
+        $ideas = Idea::where('topic_id', $id)
+                        ->where('status', 1)
+                        ->latest()->paginate(5);
 
         if($topic){
             
@@ -60,5 +62,13 @@ class HomeController extends Controller
             $idea->increment('view');
         }
         return view('frontend.pages.idea.view_idea', compact('idea','comments'));
+    }
+
+    public function myDashboard()
+    {   
+        $user = \Auth::user()->id; // finding the user
+        
+        
+        return view('frontend.pages.profile.my_dashboard');
     }
 }
