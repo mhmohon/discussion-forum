@@ -4,7 +4,7 @@
             <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="index.html"><img src="images/logo.jpg" alt=""  /></a></div>
             <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
                 <div class="dropdown">
-                    <a>UOG Forum</a> 
+                    <a href="{{ route('home') }}" style=" color: #fff; ">UOG Forum</a> 
                    
                 </div>
             </div>

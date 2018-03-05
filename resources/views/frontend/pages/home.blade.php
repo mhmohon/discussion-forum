@@ -37,7 +37,7 @@
                                 <i class="fa fa-clock-o"></i> Posted on : {{ \Carbon\Carbon::parse($topic->start_date)->format('d M Y') }}
                             </div>
 
-                            @if($topic->end_date < \Carbon\Carbon::now())
+                            @if($topic->status == '3')
                                 
                                 <div class="posted pull-left">
                                     <i class="fa fa-clock-o"></i> Closing time: <span style="color: #ff6743">Closed</span>

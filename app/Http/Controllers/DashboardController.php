@@ -60,4 +60,18 @@ class DashboardController extends Controller
     {
         //
     }
+
+    public function show_read($idea_id, $notify_id)
+    {
+        
+        auth()->user()->unreadNotifications->find($notify_id)->markAsRead(); 
+        
+        return redirect()->route('editIdea',$idea_id);
+    }
+
+    public function notifyReadAll()
+    {
+        auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    }
 }

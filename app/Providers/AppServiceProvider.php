@@ -8,6 +8,7 @@ use Auth;
 use Carbon\Carbon;
 use App\Topic;
 use App\Idea;
+use App\Comment;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,18 +20,17 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $topics = Topic::latest()->get();
-        $timezone = date_default_timezone_get();
-        echo "The current server timezone is: " . $timezone;
+        
         
         foreach ($topics as $topic) {
 
-           if(\Carbon\Carbon::parse($topic->start_date) == \Carbon\Carbon::now()->toDateString()){
+           if($topic->start_date == \Carbon\Carbon::now()->toDateString()){
 
                 Topic::find($topic->id)->update([
                     'status' => '1'
                 ]);
            }
-           if($topic->end_date <= \Carbon\Carbon::now()){
+           if($topic->end_date < \Carbon\Carbon::now()->toDateString()){
                 Topic::find($topic->id)->update([
                     'status' => '3'
                 ]);
@@ -52,6 +52,21 @@ class AppServiceProvider extends ServiceProvider
                                 })->latest()->limit(6)->get();
 
             $view->with('commingTopics',$commingTopics)->with('activeTopics',$activeTopics)->with('activeIdeas',$activeIdeas);
+        });
+
+        View::composer('frontend.pages.profile.my_dashboard', function($view){
+
+            $user = \Auth::user()->id;
+            $myIdea = Idea::where('user_id', $user)
+                                ->latest()
+                                ->limit(5)
+                                ->get();
+            $myComment = Comment::where('user_id', $user)
+                                ->latest()
+                                ->limit(5)
+                                ->get();
+
+            $view->with('myIdea',$myIdea)->with('myComment',$myComment);
         });
     }
 

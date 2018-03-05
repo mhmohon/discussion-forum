@@ -31,6 +31,7 @@ class HomeController extends Controller
         
         $latestTopics = Topic::where('start_date', '<=', $currentDate)
                                 ->where('status', 1)
+                                ->orwhere('status', 3)
                                 ->latest()->paginate(5);
 
         return view('frontend.pages.home', compact('latestTopics','ideaCount'));

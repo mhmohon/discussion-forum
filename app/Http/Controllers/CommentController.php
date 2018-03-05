@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Notifications\NotifyAuthor;
+use App\Notifications\NotifyAuthorReplies;
 use App\User;
 use App\Idea;
 use App\Comment;
@@ -68,7 +68,7 @@ class CommentController extends Controller
         }elseif(request('postas') == 'anynomous'){
             $comment = Comment::create([
                 'description' => request('comment_detail'),
-                'name' => 'anynomous',
+                'name' => 'Anynomous',
                 'status' => '1',
                 'user_id' => $user_id,
                 'idea_id' => $id,
@@ -79,7 +79,7 @@ class CommentController extends Controller
         //send email when comment to idea
         $idea = Idea::find($id);
         $author = User::find($idea->user_id);
-        \Notification::send($author, new NotifyAuthor($idea));
+        \Notification::send($author, new NotifyAuthorReplies($idea,$comment));
         //send email when comment to idea
         return redirect()->route('ideaShow', $id)->withMsgsuccess('Your comment has been posted sucessfully.');
 

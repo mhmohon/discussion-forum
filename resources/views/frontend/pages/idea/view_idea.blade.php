@@ -42,7 +42,7 @@
                         <div class="posted pull-left">
                             <i class="fa fa-user-o"></i> {{ $idea->name }} &nbsp <i class="fa fa-clock-o"></i>  Posted on : {{ \Carbon\Carbon::parse($idea->start_date)->format('d M Y') }}</div>
                         
-                        @if($idea->topic->end_date >= \Carbon\Carbon::now())
+                        @if($idea->topic->status != '3')
 
                             <div class="next pull-right">                                        
                                 <a href="#"><i class="fa fa-share"></i></a>
@@ -153,7 +153,7 @@
 
                 {{ $comments->links() }}
 
-                @if($idea->topic->end_date >= \Carbon\Carbon::now())
+                @if($idea->topic->status != '3')
                 <!-- POST Idea -->
                 <div class="post">
                     {!! Form::open(['route'=>['addComment',$idea->id],'class'=>'form-horizontal m-b-30','files' => true,'name'=>'storeCommentForm']) !!}

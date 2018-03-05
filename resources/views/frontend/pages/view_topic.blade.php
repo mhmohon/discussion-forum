@@ -45,7 +45,7 @@
                         
                         @if(checkPermission(['student']))
 
-                        @if($topic->closure_date >= \Carbon\Carbon::now() &&  $topic->start_date <= \Carbon\Carbon::now())
+                        @if($topic->closure_date >= \Carbon\Carbon::now()->toDateString() &&  $topic->start_date <= \Carbon\Carbon::now()->toDateString())
 
                             <div class="next pull-right">                                         
                                 <a href="{{ route('addIdea', $topic->id) }}"><i class="fa fa-share"></i></a>
@@ -156,7 +156,7 @@
                 <div class="post pull-left">
                     <div class="postreply">
                         
-                        @if($topic->closure_date >= \Carbon\Carbon::now() &&  $topic->start_date <= \Carbon\Carbon::now())
+                        @if($topic->closure_date >= \Carbon\Carbon::now()->toDateString() &&  $topic->start_date <= \Carbon\Carbon::now()->toDateString() && $topic->status == '1')
                             <div class="pull-left"><a href="{{ route('addIdea', $topic->id) }}" class="btn btn-primary">Post a Idea</a>&nbsp </div>
                         @else
                             <div class="pull-left">

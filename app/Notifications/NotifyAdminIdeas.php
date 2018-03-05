@@ -7,19 +7,21 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NotifyAuthor extends Notification
+class NotifyAdminIdeas extends Notification
 {
     use Queueable;
-    protected $idea;
-
+    private $idea;
+    private $user;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($idea)
+    public function __construct($idea,$user)
     {
         $this->idea = $idea;
+        $this->user = $user;
+
     }
 
     /**
@@ -30,21 +32,23 @@ class NotifyAuthor extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
+    
+
     /**
-     * Get the mail representation of the notification.
+     * Get the array representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return array
      */
-    public function toMail($notifiable)
+    public function toDatabase($notifiable)
     {
-        return (new MailMessage)
-                    ->line('Someone commented on your idea. Click the button below to view the idea.')
-                    ->action('View Idea', route('ideaShow', $this->idea->id))
-                    ->line('Thank you');
+        return [
+            'idea' => $this->idea,
+            'user' => $this->user,
+        ];
     }
 
     /**

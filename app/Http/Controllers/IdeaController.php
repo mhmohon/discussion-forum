@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Notifications\NotifyQac;
+use App\Notifications\NotifyAdminIdeas;
 use App\Topic;
 use App\Idea;
 use App\User;
@@ -19,7 +20,7 @@ class IdeaController extends Controller
     {
         $topic =  Topic::find($id);
         
-        if($topic->closure_date >= \Carbon\Carbon::now()){
+        if($topic->closure_date >= \Carbon\Carbon::now()->toDateString() && $topic->status == '1'){
 
             return view('frontend.pages.idea.create_idea', compact('topic'));
         }else{
@@ -84,8 +85,13 @@ class IdeaController extends Controller
         $user_dep = \Auth::user()->student->dep_id;
         $depertment = DepartmentHead::find($user_dep);
 
+        //send email to the QAC
         $user = User::find($depertment->user_id);
-        \Notification::send($user, new NotifyQac());
+        //\Notification::send($user, new NotifyQac());
+
+        $author = User::find($idea->user_id);
+        //send Notification to the Admin
+        User::find(1)->notify(new NotifyAdminIdeas($idea, $author));
 
         return redirect()->route('topicShow', $id)->withMsgsuccess('Your Idea has been posted, Waiting for Admin Approval');
 

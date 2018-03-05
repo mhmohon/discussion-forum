@@ -13,41 +13,80 @@
 </div>
 
 <div class="container">
-
-    <h1 style="color: #697683;">Welcome Mosharrf Hossain!</h1>
+    
+    @if(\Auth::user()->user_role == '5')
+        <h1 style="color: #697683;">Welcome {{ \Auth::user()->student->first_name. ' ' .\Auth::user()->student->last_name }}!</h1>
+    @else
+        <h1 style="color: #697683;">Welcome {{ \Auth::user()->staff->first_name. ' ' .\Auth::user()->staff->last_name }}!</h1>
+    @endif
     <hr>
 
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default panel-counter">
                 <div class="panel-heading pnl-head">Idea</div>
-                <div class="panel-body pnl-body">0</div>
+
+                <div class="panel-body pnl-body">{{ !empty($myIdea) ? $myIdea->count() : '0' }}</div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="panel panel-default panel-counter">
                 <div class="panel-heading pnl-head">Replies</div>
-                <div class="panel-body pnl-body">0</div>
+                <div class="panel-body pnl-body">{{ !empty($myComment) ? $myComment->count() : '0' }}</div>
             </div>
         </div>
         
     </div>
-
+    
     <div class="row profile-latest-items">
+    @if(checkPermission(['student']))
         <div class="col-md-6">
             <h3>Latest Idea</h3>
+
+            @if($myIdea->count())
+            @foreach($myIdea as $idea)
 			<div class="list-group">
-                <a href="https://laravel.io/forum/facebook-share-not-working-with-mobile-devices" class="list-group-item">
-                    <h4 class="list-group-item-heading">Facebook Share Not Working With Mobile Devices?</h4>
-                    <p class="list-group-item-text">I recently had a new project developed in Laravel, the original developer is currently out-of-town a...</p>
+                <a href="" class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ $idea->title }}</h4>
+                    <p><i class="fa fa-clock-o"></i> {{ \Carbon\Carbon::parse($idea->created_at)->diffForHumans() }}</p>
+                       
                 </a>
             </div>
-            <p class="text-center">Mosharrf Hossain has not posted any threads yet.</p>
+            @endforeach
+            @else
+                <div class="list-group">
+                    <a href="" class="list-group-item">
+                        <h4 class="list-group-item-heading">{{ \Auth::user()->student->first_name. ' ' .\Auth::user()->student->last_name }} has not posted any idea yet</h4>
+                        
+                    </a>
+                </div>
+            @endif
         </div>
+        @endif
         <div class="col-md-6">
             <h3>Latest Replies</h3>
-
-            <p class="text-center">Mosharrf Hossain has not posted any replies yet.</p>
+            @if($myComment->count())
+            @foreach($myComment as $comment)
+            <div class="list-group">
+                <a href="" class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ $comment->description }}</h4>
+                    <p><i class="fa fa-clock-o"></i> {{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</p>
+                </a>
+            </div>
+            @endforeach
+            @else
+                <div class="list-group">
+                    <a href="" class="list-group-item">
+                        @if(\Auth::user()->user_role == '5')
+                           <h4 class="list-group-item-heading">{{ \Auth::user()->student->first_name. ' ' .\Auth::user()->student->last_name }} has not posted any replies yet</h4>
+                        @else
+                            <h4 class="list-group-item-heading">{{ \Auth::user()->staff->first_name. ' ' .\Auth::user()->staff->last_name }} has not posted any replies yet</h4>
+                        @endif
+                       
+                       
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 </div>
