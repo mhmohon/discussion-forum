@@ -56,7 +56,7 @@
             @endif
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">text_fields</i>
-                    <span>Topic</span>
+                    <span>Topics</span>
                 </a>
                 <ul class="ml-menu">
                     <li class="{!! (Request::url() == route('addTopic')) ? 'active' : '' !!}">
@@ -82,7 +82,7 @@
             @endif
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">assignment</i>
-                    <span>Idea</span>
+                    <span>Ideas</span>
                 </a>
                 <ul class="ml-menu">
                     
@@ -96,6 +96,32 @@
                 </ul>
             </li>
             
+            @if(!empty($report))
+            <li class="{!! (Request::url() == route('reportIdeaDepartment')) ? 'active' : '' !!}">
+            @else
+            <li class="{!! (Request::url() == route('reportIdeaDepartment')) ? 'active' : '' !!}">
+            @endif
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">pie_chart</i>
+                    <span>Reports</span>
+                </a>
+                <ul class="ml-menu">
+                    <li class="{!! (Request::url() == route('reportIdeaDepartment')) ? 'active' : '' !!}">
+                        <a href="{{ route('reportIdeaDepartment') }}">
+                            <span>Department-wise Idea</span>
+                        </a>
+                        
+                    </li>
+                    
+                    <li class="{!! (Request::url() == route('viewTopic')) ? 'active' : '' !!}">
+                        <a href="">
+                            <span>Department-wise Contributors</span>
+                        </a>
+                        
+                    </li>
+                    
+                </ul>
+            </li>
 
             <li>
                 <a href="javascript:void(0);" class="menu-toggle">

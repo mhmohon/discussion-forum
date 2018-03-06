@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Idea;
+use DB;
+use Charts;
 
 class DashboardController extends Controller
 {
@@ -13,7 +16,15 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view ('backend.pages.home');
+        $ideas = Idea::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
+                    ->get();
+        $chart = Charts::database($ideas, 'bar', 'highcharts')
+                ->title('Monthly Idea post')
+                ->elementLabel("Total Idea")
+                ->responsive(false)
+                ->groupByMonth(date('Y'), true);
+
+        return view ('backend.pages.home', compact('chart'));
     }
 
     /**

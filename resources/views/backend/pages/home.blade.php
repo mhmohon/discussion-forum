@@ -1,11 +1,17 @@
 ﻿@extends ('backend.layouts.master')
 
 @section('page_title','Admin Dashboard')
+
+@section('extra_css')
+    <!-- For Reports -->
+    {!! Charts::styles() !!}
+@endsection
+
 @section('main_content')
    
     <div class="block-header">
         @if(\Auth::user()->user_role == '1')
-            <h1 style=" font-size: 25px; ">Welcome <span class="font-bold col-pink">Admin</span></h1>
+            <h1 style=" font-size: 25px; ">Welcome <span class="font-bold col-pink">Administrator</span></h1>
         @elseif(\Auth::user()->user_role == '2')
             <h1 style=" font-size: 25px; ">Welcome <span class="font-bold col-pink">Quality Assurance Manager</span></h1>
         @else
@@ -68,14 +74,16 @@
                 <div class="header">
                     <div class="row clearfix">
                         <div class="col-xs-12 col-sm-6">
-                            <h2>CPU USAGE (%)</h2>
+                            <h2>Total Idea Post</h2>
                         </div>
                         
                     </div>
                     
                 </div>
                 <div class="body">
-                    <div id="real_time_chart" class="dashboard-flot-chart"></div>
+                    
+                        {!! $chart->html() !!}
+                    
                 </div>
             </div>
         </div>
@@ -83,4 +91,12 @@
     <!-- #END# CPU Usage -->
    
 
+@endsection
+
+@section('extra_js')
+
+    <!-- For Reports -->
+    {!! Charts::scripts() !!}
+    {!! $chart->script() !!}
+    
 @endsection
