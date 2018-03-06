@@ -22,6 +22,8 @@ require __DIR__ . '/web/idea.php';
 
 require __DIR__ . '/web/comment.php';
 
+require __DIR__ . '/web/idea&commentView.php';
+
 
 Auth::routes();
 
@@ -32,7 +34,7 @@ Route::get('/forum/topic/view&topic_id={id}', 'HomeController@topicShow')->name(
 
 Route::get('/forum/topic/idea/view&idea_id={id}', 'HomeController@ideaShow')->name('ideaShow');
 
-Route::get('/forum/my-dashboard', ['middleware'=>'check-role:student|staff','uses'=>'HomeController@myDashboard'])->name('myDashboardShow');
+Route::get('/forum/my-dashboard/', ['middleware'=>'check-role:student|staff','uses'=>'HomeController@myDashboard'])->name('myDashboardShow');
 
 Route::get('/', function () {
     return redirect()->route('home');

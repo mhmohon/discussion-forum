@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Topic;
+use DB;
 use App\Idea;
+use App\Laravellikecomment_total_like;
 use App\Comment;
 use Carbon\Carbon;
 
@@ -72,7 +74,42 @@ class HomeController extends Controller
     {   
         $user = \Auth::user()->id; // finding the user
         
+        return view('frontend.pages.profile.my_dashboard', compact(user));
+    }
+
+    public function most_idea_popular()
+    {   
         
-        return view('frontend.pages.profile.my_dashboard');
+        $ideas = DB::table('ideas')
+                    ->join('laravellikecomment_total_likes', 'ideas.id', '=', 'laravellikecomment_total_likes.item_id')
+                    ->select('ideas.*')
+                    ->where('ideas.status', '=', '1')
+                    ->orderBy('laravellikecomment_total_likes.total_like', 'desc')
+                    ->paginate(5);
+
+        return view('frontend.pages.idea.short_idea_popular', compact('ideas'));
+    }
+
+    public function most_idea_view($short, $orderby)
+    {   
+        $ideas = Idea::where('status',1)
+                        ->orderBy($short,$orderby)
+                        ->paginate(5);
+        
+        return view('frontend.pages.idea.short_idea', compact('ideas'));
+    }
+
+    public function latest_idea()
+    {   
+        $ideas = Idea::where('status', 1)
+                        ->latest()
+                        ->paginate(5);
+        return view('frontend.pages.idea.short_idea', compact('ideas'));
+    }
+
+    public function latest_comment()
+    {   
+        $comments = Comment::latest()->paginate(10);
+        return view('frontend.pages.comment.short_comment', compact('comments'));
     }
 }

@@ -1,6 +1,20 @@
 <div class="col-lg-4 col-md-4">
 
-    <!-- -->
+    @if(checkPermission(['qac','qam','staff','admin']))
+    <div class="sidebarblock">
+       
+        <select id="input-sort" class="text-right form-control display_sort" onchange="location = this.value;">
+                <option value="{{ route('home')}}">Default</option>
+                <option value="{{ route('mostIdeaPopular')}}">Most Popular Ideas</option>
+                <option value="{{ url('/forum/all-idea/view/sort_by=view&order=DESC')}}">Most Viewed Ideas</option>
+                <option value="{{ route('latestIdea')}}">Latest Ideas</option>
+                <option value="{{ route('latestComment')}}">Latest Comments</option>
+    
+            </select>
+                
+    </div>
+    @endif
+    <!-- Up Coming -->
     <div class="sidebarblock">
         <h3>Up Coming Topics </h3>
         <div class="divline"></div>

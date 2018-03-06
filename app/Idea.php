@@ -27,6 +27,6 @@ class Idea extends Model
 
     public function reaction()
     {
-        return $this->hasMany(Reaction::class);
+        return $this->hasMany(Laravellikecomment_total_like::class);
     }
 }
