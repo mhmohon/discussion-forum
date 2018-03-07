@@ -14,10 +14,10 @@
 
 <div class="container">
     
-    @if(\Auth::user()->user_role == '5')
-        <h1 style="color: #697683;">Welcome {{ \Auth::user()->student->first_name. ' ' .\Auth::user()->student->last_name }}!</h1>
+    @if($user->user_role == '5')
+        <h1 style="color: #697683;">Welcome {{ $user->student->first_name. ' ' .$user->student->last_name }}!</h1>
     @else
-        <h1 style="color: #697683;">Welcome {{ \Auth::user()->staff->first_name. ' ' .\Auth::user()->staff->last_name }}!</h1>
+        <h1 style="color: #697683;">Welcome {{ $user->staff->first_name. ' ' .$user->staff->last_name }}!</h1>
     @endif
     <hr>
 
@@ -46,7 +46,7 @@
             @if($myIdea->count())
             @foreach($myIdea as $idea)
 			<div class="list-group">
-                <a href="" class="list-group-item">
+                <a href="{{ route('ideaShow', $idea->id) }}" class="list-group-item">
                     <h4 class="list-group-item-heading">{{ $idea->title }}</h4>
                     <p><i class="fa fa-clock-o"></i> {{ \Carbon\Carbon::parse($idea->created_at)->diffForHumans() }}</p>
                        
@@ -56,7 +56,7 @@
             @else
                 <div class="list-group">
                     <a href="" class="list-group-item">
-                        <h4 class="list-group-item-heading">{{ \Auth::user()->student->first_name. ' ' .\Auth::user()->student->last_name }} has not posted any idea yet</h4>
+                        <h4 class="list-group-item-heading">{{ $user->student->first_name. ' ' .$user->student->last_name }} has not posted any idea yet</h4>
                         
                     </a>
                 </div>
@@ -68,7 +68,7 @@
             @if($myComment->count())
             @foreach($myComment as $comment)
             <div class="list-group">
-                <a href="" class="list-group-item">
+                <a href="{{ route('ideaShow', $comment->idea->id) }}" class="list-group-item">
                     <h4 class="list-group-item-heading">{{ $comment->description }}</h4>
                     <p><i class="fa fa-clock-o"></i> {{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</p>
                 </a>
@@ -78,9 +78,9 @@
                 <div class="list-group">
                     <a href="" class="list-group-item">
                         @if(\Auth::user()->user_role == '5')
-                           <h4 class="list-group-item-heading">{{ \Auth::user()->student->first_name. ' ' .\Auth::user()->student->last_name }} has not posted any replies yet</h4>
+                           <h4 class="list-group-item-heading">{{ $user->student->first_name. ' ' .$user->student->last_name }} has not posted any replies yet</h4>
                         @else
-                            <h4 class="list-group-item-heading">{{ \Auth::user()->staff->first_name. ' ' .\Auth::user()->staff->last_name }} has not posted any replies yet</h4>
+                            <h4 class="list-group-item-heading">{{ $user->staff->first_name. ' ' .$user->staff->last_name }} has not posted any replies yet</h4>
                         @endif
                        
                        

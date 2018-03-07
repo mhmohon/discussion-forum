@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Student List
+                        Staff List
                     </h2>
                     
                 </div>
@@ -42,21 +42,20 @@
                             </thead>
                             
                             <tbody>
-                                @foreach ($users as $key => $user)
+                                @foreach ($staffs as $key => $staff)
                                 <tr>
-
                                     <td>{{ ($key+1) }}</td>
                                     <td>
-                                        {{ $user->student->first_name .' '. $user->student->last_name }}
+                                        {{ $staff->first_name .' '. $staff->last_name }}
                                     </td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->student->gender }}</td>
-                                    <td>{{ $user->student->phone }}</td>
-                                    @if( $user->user_status == 0)
+                                    <td>{{ $staff->user->email }}</td>
+                                    <td>{{ $staff->gender }}</td>
+                                    <td>{{ $staff->phone }}</td>
+                                    @if( $staff->user->user_status == 0)
                                         <td class="text-center">
                                             <span class="label label-warning"> Deactive</span>
                                         </td>
-                                    @elseif($user->user_status == 1)
+                                    @elseif($staff->user->user_status == 1)
                                         <td class="text-center">
                                             <span class="label label-success"> Active</span>
                                         </td>
@@ -65,7 +64,7 @@
                                     
                                     <td style='width: 12%'>
                                             
-                                        <a href="{{ route('editStudent',$user->id) }}" class="btn btn-sm btn-warning"><i class="material-icons">mode_edit</i></a>
+                                        <a href="{{ route('editStaff',$staff->user->id) }}" class="btn btn-sm btn-warning"><i class="material-icons">mode_edit</i></a>
                                     </td>
                                     
                                 </tr>
@@ -89,4 +88,3 @@
     <script src="{{ asset('js/backend/plugins/bootstrap-datatable/jquery-datatable.js') }} "></script>
 	
 @endsection
-

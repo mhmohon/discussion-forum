@@ -55,28 +55,12 @@ class AppServiceProvider extends ServiceProvider
             $view->with('commingTopics',$commingTopics)->with('activeTopics',$activeTopics)->with('activeIdeas',$activeIdeas);
         });
 
-        View::composer('frontend.pages.profile.my_dashboard', function($view){
-
-            $user = \Auth::user()->id;
-            $myIdea = Idea::where('user_id', $user)
-                                ->latest()
-                                ->limit(5)
-                                ->get();
-            $myComment = Comment::where('user_id', $user)
-                                ->latest()
-                                ->limit(5)
-                                ->get();
-
-            $view->with('myIdea',$myIdea)->with('myComment',$myComment);
-        });
-
+        
         //for admin dashboard
         View::composer('backend.pages.home', function($view){
 
             $user = User::latest()->get();
             
-            
-
             $view->with('user',$user);
         });
     }

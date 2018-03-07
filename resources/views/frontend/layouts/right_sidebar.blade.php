@@ -40,15 +40,15 @@
     @if(checkPermission(['student']))
         @if($activeTopics->count())
 
-        @foreach($activeTopics as $activeTopic)
            <div class="sidebarblock">
                 <h3>My Active Topics</h3>
                 <div class="divline"></div>
+            @foreach($activeTopics as $activeTopic)
                 <div class="blocktxt">
                     <a href="{{ route('topicShow',$activeTopic->id) }}">{{ $activeTopic->title }}</a>
                 </div>
+            @endforeach
             </div>
-        @endforeach
 
         @else
             <div class="sidebarblock">
@@ -65,15 +65,15 @@
 
         @if($activeIdeas->count())
 
-        @foreach($activeIdeas as $activeIdea)
            <div class="sidebarblock">
                 <h3>My Latest Replies</h3>
                 <div class="divline"></div>
+            @foreach($activeIdeas as $activeIdea)
                 <div class="blocktxt">
                     <a href="{{ route('ideaShow',$activeIdea->id) }}">{{ $activeIdea->title }}</a>
                 </div>
+            @endforeach
             </div>
-        @endforeach
         @else
             <div class="sidebarblock">
                 <h3>My Latest Replies</h3>

@@ -36,6 +36,7 @@
     <div class="menu">
         <ul class="list">
             <li class="header">MAIN NAVIGATION</li>
+            
             <li class="{!! (Request::url() == route('dashboardHome')) ? 'active' : '' !!}">
                 <a href="{{ route('dashboardHome') }}">
                     <i class="material-icons">home</i>
@@ -48,7 +49,47 @@
                     <span>View Forum</span>
                 </a>
             </li>
+            <li class="header">USER SECTION</li>
             
+            
+            <li class="{!! Request::url() == route('viewStaff') || Request::url() == route('editStaff', '4') ? 'active' : '' !!}">
+            
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">supervisor_account</i>
+                    <span>Staffs</span>
+                </a>
+                <ul class="ml-menu">
+                    
+                    <li class="{!! (Request::url() == route('viewStaff')) ? 'active' : '' !!}">
+                        <a href="{{ route('viewStaff') }}">
+                            <span>View All Staff</span>
+                        </a>
+                        
+                    </li>
+                    
+                </ul>
+            </li>
+
+            <li class="{!! Request::url() == route('viewStudent') || Request::url() == route('editStudent', '1') ? 'active' : '' !!}">
+            
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">supervisor_account</i>
+                    <span>Students</span>
+                </a>
+                <ul class="ml-menu">
+                    
+                    <li class="{!! (Request::url() == route('viewStudent')) ? 'active' : '' !!}">
+                        <a href="{{ route('viewStudent') }}">
+                            <span>View All Student</span>
+                        </a>
+                        
+                    </li>
+                    
+                </ul>
+            </li>
+
+            <li class="header">MAIN SECTION</li>
+            <li class="active"></li>
             @if(! empty($topic))
             <li class="{!! (Request::url() == route('addTopic') || Request::url() == route('viewTopic') || Request::url() == route('editTopic', $topic->id)) ? 'active' : '' !!}">
             @else

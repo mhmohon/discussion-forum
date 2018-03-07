@@ -6,6 +6,7 @@ use Request;
 use App\Topic;
 use DB;
 use App\Idea;
+use App\User;
 use App\Laravellikecomment_total_like;
 use App\Comment;
 use Carbon\Carbon;
@@ -74,9 +75,17 @@ class HomeController extends Controller
 
     public function myDashboard()
     {   
-        $user = \Auth::user()->id; // finding the user
-        
-        return view('frontend.pages.profile.my_dashboard', compact(user));
+        $user_id = \Auth::user()->id; // finding the user id
+        $user = User::find($user_id);
+        $myIdea = Idea::where('user_id', $user_id)
+                                ->latest()
+                                ->limit(5)
+                                ->get();
+        $myComment = Comment::where('user_id', $user_id)
+                                ->latest()
+                                ->limit(5)
+                                ->get();
+        return view('frontend.pages.profile.my_dashboard', compact('user','myIdea','myComment'));
     }
 
     public function most_idea_popular()
