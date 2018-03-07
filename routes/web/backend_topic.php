@@ -5,7 +5,7 @@ Route::group(['middleware'=>'auth'],function(){
 
 	Route::post('forum/dashboard/add/topic', ['middleware'=>'check-role:admin|qam','uses'=>'TopicController@store'])->name('storeTopic');
 
-	Route::get('forum/dashboard/view/topic', ['middleware'=>'check-role:admin|qam','uses'=>'TopicController@index'])->name('viewTopic');
+	Route::get('forum/dashboard/view/topic', ['middleware'=>'check-role:admin|qam|qac','uses'=>'TopicController@index'])->name('viewTopic');
 
 	Route::get('forum/dashboard/topic/edit&topic_id={id}', ['middleware'=>'check-role:admin|qam','uses'=>'TopicController@edit'])->name('editTopic');
 

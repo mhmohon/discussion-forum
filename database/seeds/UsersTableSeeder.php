@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
             
         ]);
         $user = User::create([
-            'email' => 'irina@gmail.com',
+            'email' => 'mohon.diit33@gmail.com',
             'password' => bcrypt('forum@qac'),
             'user_role' => '3',
             'user_status' => '1',
@@ -71,7 +71,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $user = User::create([
-        	'email' => 'rudro@gmail.com',
+        	'email' => 'mohon.diit65@gmail.com',
         	'password' => bcrypt('forum@stu'),
         	'user_role' => '5',
         	'user_status' => '1',

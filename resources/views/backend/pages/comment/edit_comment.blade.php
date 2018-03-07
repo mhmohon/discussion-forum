@@ -19,36 +19,21 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    Idea Edit Form
+                    Comment Edit Form
                 </h2>
                 
             </div>
             <div class="body">
-            	{!! Form::open(['route'=>['IdeaUpdate',$idea->id],'class'=>'form-horizontal','files' => true]) !!}
+            	{!! Form::open(['route'=>['CommentUpdate',$comment->id],'class'=>'form-horizontal','files' => true]) !!}
                     <div class="row clearfix">
                         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="topic_title">Idea Title</label>
+                            <label for="topic_title">Description</label>
                         </div>
                         <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                            <div class="form-group {{ $errors->has('idea_title') ? ' has-error' : '' }}">
+                            <div class="form-group {{ $errors->has('comment_title') ? ' has-error' : '' }}">
                                 <div class="form-line">
-                                    <input type="text" id="idea_title" name="idea_title" class="form-control" placeholder="Type idea title" 
-                                    value="{{ $idea->title }}" disabled="disabled">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="topic_des">Description</label>
-                        </div>
-                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                            <div class="form-group form-float {{ $errors->has('topic_des') ? ' has-error' : '' }}">
-                                <div class="form-line">
-                                    <p>
-                                        {!! $idea->description !!}
-                                    </p>
-                                    
+                                    <input type="text" id="comment_title" name="comment_description" class="form-control" 
+                                    value="{{ $comment->description }}" disabled="disabled">
                                 </div>
                             </div>
                         </div>
@@ -61,7 +46,7 @@
                         </div>
                         <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                             
-                            {!! Form::select('status',['1'=>'Active','0'=>'Deactive'],$idea->status,['class'=>'form-control show-tick','required','name'=>'status','id'=>'status','placeholder'=>'Please select Status','data-validation'=>'required']) !!}
+                            {!! Form::select('status',['1'=>'Active','0'=>'Deactive'],$comment->status,['class'=>'form-control show-tick','required','name'=>'status','id'=>'status','placeholder'=>'Please select Status','data-validation'=>'required']) !!}
                             
                         </div>
                     </div>
@@ -71,7 +56,7 @@
                     
                     <div class="row clearfix">
                         <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Update Idea</button>
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Update Comment</button>
                             <a href="{{ URL::previous() }}" class="btn btn-info m-t-15 waves-effect">Back</a>
                             
                         </div>

@@ -1026,10 +1026,9 @@ a.down:hover {
 		max-height: 50px;
 	}
     .post .posttext {
-        width: 71%;
-        padding-right: 15px;
-        padding-top: 15px;
-        padding-bottom: 15px;
+        width: 86%;
+		padding: 15px 8px;
+        
     }
 	.post .avatar {
 		width: 37px;
@@ -1068,6 +1067,12 @@ a.down:hover {
         height: auto; 
         margin-bottom: 15px;
     }
+	
+	.mobile-avatar{
+		
+		bottom: 119px;
+		
+	}
 
     .selecttopic select {
         width: 100%;
@@ -1099,9 +1104,11 @@ a.down:hover {
     .postinfobot {
         padding: 10px;
     }
-
+	.postinfobot .idea-user-mini{
+		width: 72% !important;
+	}
     .postinfobot .likeblock {
-        width: 100%;
+        width: 28%;
     }
 
     .postinfobot .posted {
@@ -1147,6 +1154,21 @@ a.down:hover {
         padding-bottom: 15px;
 
     }
+	.post .wrap-ut {
+		width: 83%;
+	}
+	.post .postinfo {
+		width: 17%;
+		border-left: solid 1px #f1f1f1;
+
+	}
+	.post .idea-info-mini {
+		width: 11%;
+	}
+	.post .idea-detail-mini{
+		width: 75%;
+		padding: 15px 6px;
+	}
     /* end 3 */
 }
 

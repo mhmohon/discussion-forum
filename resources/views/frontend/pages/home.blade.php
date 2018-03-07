@@ -32,7 +32,12 @@
                         </div>
                         <div class="posttext pull-left">
                             <h2><a href="{{ route('topicShow', $topic->id) }}">{{ $topic->title }}</a></h2>
-                            <p>{{ $topic->description }}</p>
+                            @php
+                                $length = 50;
+                                $description = substr($topic->description, 0, $length);
+                                $description .= '...';
+                            @endphp
+                            <p>{{ $description }}</p>
                             <div class="posted pull-left" style="padding-right: 10px">
                                 <i class="fa fa-clock-o"></i> Posted on : {{ \Carbon\Carbon::parse($topic->start_date)->format('d M Y') }}
                             </div>

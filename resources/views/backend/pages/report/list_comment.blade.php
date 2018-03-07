@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Topic List
+                        Idea List
                     </h2>
                     
                 </div>
@@ -35,14 +35,12 @@
                                     <th>Closure Date</th>
                                     <th>Final date</th>
                                     <th>Status</th>
-                                    @if(checkPermission(['admin','qam']))
-                                        <th>Action</th>
-                                    @endif
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             
                             <tbody>
-                                @foreach ($topics as $key => $topic)
+                                @foreach ($ideas as $key => $ides)
                                 <tr>
                                     <td>{{ ($key+1) }}</td>
                                     <td>{{ $topic->title }}</td>
@@ -63,23 +61,12 @@
                                             <span class="label label-danger"> Closed</span>
                                         </td>
                                     @endif
-                                    @if(checkPermission(['admin']))
                                     <td style='width: 20%'>
-                                        
-
+                                            
                                         <a href="{{ route('topicShow',$topic->id) }}" class="btn btn-sm btn-info"><i class="material-icons">remove_red_eye</i></a>
-
                                         <a href="{{ route('editTopic',$topic->id) }}" class="btn btn-sm btn-warning"><i class="material-icons">mode_edit</i></a>
-
                                         <a href="{{ route('topicDelete',$topic->id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this?')"><i class="material-icons">delete_forever</i></a>
                                     </td>
-                                    @elseif(checkPermission(['qam']))
-                                        <td style='width: 20%'>
-                                            
-                                            <a href="{{ route('topicShow',$topic->id) }}" class="btn btn-sm btn-info"><i class="material-icons">remove_red_eye</i></a>
-                                            
-                                        </td>
-                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>

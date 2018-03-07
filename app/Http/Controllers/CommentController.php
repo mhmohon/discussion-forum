@@ -79,8 +79,12 @@ class CommentController extends Controller
         //send email when comment to idea
         $idea = Idea::find($id);
         $author = User::find($idea->user_id);
-        \Notification::send($author, new NotifyAuthorReplies($idea,$comment));
-        //send email when comment to idea
+        
+        if($user_role == '5'){
+            //send email when comment to idea
+            \Notification::send($author, new NotifyAuthorReplies($idea,$comment));
+        }
+
         return redirect()->route('ideaShow', $id)->withMsgsuccess('Your comment has been posted sucessfully.');
 
         }else{

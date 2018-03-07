@@ -87,10 +87,10 @@ class IdeaController extends Controller
 
         //send email to the QAC
         $user = User::find($depertment->user_id);
-        //\Notification::send($user, new NotifyQac());
+        \Notification::send($user, new NotifyQac());
 
-        $author = User::find($idea->user_id);
         //send Notification to the Admin
+        $author = User::find($idea->user_id);
         User::find(1)->notify(new NotifyAdminIdeas($idea, $author));
 
         return redirect()->route('topicShow', $id)->withMsgsuccess('Your Idea has been posted, Waiting for Admin Approval');

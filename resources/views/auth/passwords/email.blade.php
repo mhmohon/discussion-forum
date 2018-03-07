@@ -40,7 +40,10 @@
             <div class="body">
                 {!! Form::open(['route'=>['password.email'],'name'=>'reset']) !!}
                 
-                    <div class="msg">Reset Password</div>
+                    <div class="msg">
+                        Enter your email address that you used to register. We'll send you an email with your username and a
+                        link to reset your password.
+                    </div>
 
                     <div class="input-group {{ $errors->has('email') ? 'has-error' : ''}} ">
                         <span class="input-group-addon">
@@ -62,7 +65,11 @@
                         <div class="offset-md-2 col-md-12">
                             <button class="btn btn-block bg-pink waves-effect" type="submit">Send Password Reset Link</button>
                         </div>
+                        <div class="row m-t-20 m-b--5 align-center">
+                            <a href="{{ route('login') }}">Sign In!</a>
+                        </div>
                     </div>
+
                     
                 {{ Form::close() }}
             </div>

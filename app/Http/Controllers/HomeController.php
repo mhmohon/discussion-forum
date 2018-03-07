@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 use App\Topic;
 use DB;
 use App\Idea;
@@ -60,7 +60,9 @@ class HomeController extends Controller
 
         if($idea->status == '1'){
 
-            $comments = Comment::where('idea_id', $id)->latest()->paginate(10);
+            $comments = Comment::where('idea_id', $id)
+                                ->where('status', 1)
+                                ->latest()->paginate(10);
             $idea->increment('view');
             
             return view('frontend.pages.idea.view_idea', compact('idea','comments'));
@@ -111,5 +113,15 @@ class HomeController extends Controller
     {   
         $comments = Comment::latest()->paginate(10);
         return view('frontend.pages.comment.short_comment', compact('comments'));
+    }
+
+    public function searchTopic(Request $request)
+    {   
+        $input = Request::input('search_value');
+        
+        $latestTopics = Topic::where('title', 'LIKE', '%'. $input .'%')
+                            ->paginate(5);
+        
+        return view('frontend.pages.home',compact('latestTopics','input'));
     }
 }

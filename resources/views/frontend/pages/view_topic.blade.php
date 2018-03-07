@@ -33,7 +33,7 @@
                             </div>
    
                         </div>
-                        <div class="posttext pull-left">
+                        <div class="posttext pull-left ">
                             <h2>{{ $topic->title }}</h2>
                             <p>{{ $topic->description }}</p>
                         </div>
@@ -78,7 +78,7 @@
                             </div>
    
                         </div>
-                        <div class="posttext pull-left">
+                        <div class="posttext pull-left idea-detail-mini">
                             <h2>
                                 <a href="{{ route('ideaShow', $idea->id) }}">{{ $idea->title }}</a>
                                 @if(\Auth::user()->id == $idea->user_id)
@@ -92,7 +92,7 @@
                         </div>
 
                         <!-- idea info -->
-                        <div class="postinfo pull-right">
+                        <div class="postinfo pull-right idea-info-mini">
                             <div class="comments">
                                 <div class="commentbg">
                                     {{ number_format($idea->comment->count()) }}
@@ -109,7 +109,7 @@
                     </div>                              
                     <div class="postinfobot">
                         <!-- idea title -->
-                       <div class="posted pull-left">
+                       <div class="posted pull-left idea-user-mini">
                            <i class="fa fa-user-o"></i> {{ $idea->name }} &nbsp <i class="fa fa-clock-o"></i> {{ $idea->created_at->diffForHumans() }}
                        </div>
                         <!-- idea title -->

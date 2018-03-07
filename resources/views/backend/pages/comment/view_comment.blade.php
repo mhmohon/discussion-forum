@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Idea List
+                        Comment List
                     </h2>
                     
                 </div>
@@ -30,46 +30,47 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Title</th>
+                                    <th>Description</th>
                                     <th>Posted as</th>
                                     <th>Real Name</th>
                                     <th>Posted date</th>
-                                    <th>Views</th>
                                     <th>Status</th>
-                                    @if(checkPermission(['admin','qam']))
                                     <th>Action</th>
-                                    @endif
                                 </tr>
                             </thead>
                             
                             <tbody>
-                                @foreach ($ideas as $key => $idea)
+                                @foreach ($comments as $key => $comment)
                                 <tr>
                                     <td>{{ ($key+1) }}</td>
-                                    <td>{{ $idea->title }}</td>
-                                    <td>{{ $idea->name }}</td>
+                                    @php
+                                        $length = 15;
+                                        $description = substr($comment->description, 0, $length);
+                                        $description .= '...';
+                                    @endphp
+                                    <td>{{ $description }}</td>
+                                    <td>{{ $comment->name }}</td>
+                                    @if($comment->user->user_role == '5')
+                                        <td>{{ $comment->user->student->first_name. " " . $comment->user->student->last_name }}</td>
+                                    @else
+                                        <td>{{ $comment->user->staff->first_name. " " . $comment->user->staff->last_name }}</td>
+                                    @endif
+                                    <td>{{ \Carbon\Carbon::parse($comment->created_at)->format('d M Y') }}</td>
                                     
-                                    <td>{{ $idea->user->student->first_name. " " . $idea->user->student->last_name }}</td>
-                                    
-                                    <td>{{ \Carbon\Carbon::parse($idea->created_at)->format('d M Y') }}</td>
-                                    <td>{{ $idea->view }}</td>
-                                    @if( $idea->status == 0)
+                                    @if( $comment->status == 0)
                                         <td class="text-center">
                                             <span class="label label-warning"> Unpublished</span>
                                         </td>
-                                    @elseif($idea->status == 1)
+                                    @elseif($comment->status == 1)
                                         <td class="text-center">
                                             <span class="label label-success"> Published</span>
                                         </td>
                                     
                                     @endif
-                                    @if(checkPermission(['admin','qam']))
                                     <td style='width: 12%'>
                                             
-                                        <a href="{{ route('ideaShow',$idea->id) }}" class="btn btn-sm btn-info"><i class="material-icons">remove_red_eye</i></a>
-                                        <a href="{{ route('editIdea',$idea->id) }}" class="btn btn-sm btn-warning"><i class="material-icons">mode_edit</i></a>
+                                        <a href="{{ route('editComment',$comment->id) }}" class="btn btn-sm btn-warning"><i class="material-icons">mode_edit</i></a>
                                     </td>
-                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>

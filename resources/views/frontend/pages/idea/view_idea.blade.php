@@ -44,10 +44,6 @@
                         
                         @if($idea->topic->status != '3')
 
-                            <div class="next pull-right">                                        
-                                <a href="#"><i class="fa fa-share"></i></a>
-
-                            </div>
 
                         @endif
                       
