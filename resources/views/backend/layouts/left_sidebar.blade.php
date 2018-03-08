@@ -165,11 +165,9 @@
 
             @if(checkPermission(['admin','qam']))
 
-            @if(!empty($report))
-            <li class="{!! (Request::url() == route('reportIdeaDepartment')) ? 'active' : '' !!}">
-            @else
-            <li class="{!! (Request::url() == route('reportIdeaDepartment')) ? 'active' : '' !!}">
-            @endif
+            
+            <li class="{!! Request::url() == route('reportIdeaDepartment') || Request::url() == route('anynomousIdea') || Request::url() == route('anynomousComment') ? 'active' : '' !!}">
+       
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">pie_chart</i>
                     <span>Reports</span>
@@ -188,9 +186,15 @@
                         </a>
                         
                     </li>
-                    <li class="{!! (Request::url() == route('reportIdeaDepartment')) ? 'active' : '' !!}">
-                        <a href="">
-                            <span>Anonymous ideas</span>
+                    <li class="{!! (Request::url() == route('anynomousIdea')) ? 'active' : '' !!}">
+                        <a href="{{ route('anynomousIdea') }}">
+                            <span>Anonymous Ideas</span>
+                        </a>
+                        
+                    </li>
+                    <li class="{!! (Request::url() == route('anynomousComment')) ? 'active' : '' !!}">
+                        <a href="{{ route('anynomousComment') }}">
+                            <span>Anonymous Comments</span>
                         </a>
                         
                     </li>

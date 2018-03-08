@@ -68,7 +68,7 @@ class CommentController extends Controller
         }elseif(request('postas') == 'anynomous'){
             $comment = Comment::create([
                 'description' => request('comment_detail'),
-                'name' => 'Anynomous',
+                'name' => 'anynomous',
                 'status' => '1',
                 'user_id' => $user_id,
                 'idea_id' => $id,

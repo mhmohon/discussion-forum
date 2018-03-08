@@ -31,11 +31,13 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Title</th>
-                                    <th>Posted by</th>
+                                    <th>Posted as</th>
+                                    <th>Real Name</th>
                                     <th>Posted date</th>
-                                    <th>Views</th>
                                     <th>Status</th>
+                                    @if(checkPermission(['admin','qam']))
                                     <th>Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             
@@ -43,10 +45,18 @@
                                 @foreach ($ideas as $key => $idea)
                                 <tr>
                                     <td>{{ ($key+1) }}</td>
-                                    <td>{{ $idea->title }}</td>
-                                    <td>{{ $idea->name }}</td>
+                                    @php
+                                        $length = 30;
+                                        $title = substr($idea->title, 0, $length);
+                                        $title .= '...';
+                                    @endphp
+                                    <td>{{ $title }}</td>
+                                    <td>{{ ucfirst($idea->name) }}</td>
+                                    
+                                    <td>{{ $idea->user->student->first_name. " " . $idea->user->student->last_name }}</td>
+                                    
                                     <td>{{ \Carbon\Carbon::parse($idea->created_at)->format('d M Y') }}</td>
-                                    <td>{{ $idea->view }}</td>
+                                    
                                     @if( $idea->status == 0)
                                         <td class="text-center">
                                             <span class="label label-warning"> Unpublished</span>
@@ -57,11 +67,13 @@
                                         </td>
                                     
                                     @endif
-                                    <td style='width: 20%'>
+                                    @if(checkPermission(['admin','qam']))
+                                    <td style='width: 12%'>
                                             
                                         <a href="{{ route('ideaShow',$idea->id) }}" class="btn btn-sm btn-info"><i class="material-icons">remove_red_eye</i></a>
                                         <a href="{{ route('editIdea',$idea->id) }}" class="btn btn-sm btn-warning"><i class="material-icons">mode_edit</i></a>
                                     </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -81,5 +93,5 @@
     <script src="{{ asset('js/backend/plugins/bootstrap-datatable/jquery.dataTables.js') }} "></script>
     <script src="{{ asset('js/backend/plugins/bootstrap-datatable/dataTables.bootstrap.js') }} "></script>
     <script src="{{ asset('js/backend/plugins/bootstrap-datatable/jquery-datatable.js') }} "></script>
-	
+    
 @endsection

@@ -46,7 +46,12 @@
                                 @foreach ($ideas as $key => $idea)
                                 <tr>
                                     <td>{{ ($key+1) }}</td>
-                                    <td>{{ $idea->title }}</td>
+                                    @php
+                                        $length = 30;
+                                        $title = substr($idea->title, 0, $length);
+                                        $title .= '...';
+                                    @endphp
+                                    <td>{{ $title }}</td>
                                     <td>{{ $idea->name }}</td>
                                     
                                     <td>{{ $idea->user->student->first_name. " " . $idea->user->student->last_name }}</td>
@@ -88,6 +93,17 @@
     <!-- Bootstrap Core Js -->
     <script src="{{ asset('js/backend/plugins/bootstrap-datatable/jquery.dataTables.js') }} "></script>
     <script src="{{ asset('js/backend/plugins/bootstrap-datatable/dataTables.bootstrap.js') }} "></script>
-    <script src="{{ asset('js/backend/plugins/bootstrap-datatable/jquery-datatable.js') }} "></script>
+   
+    
+    <script>
+        $(document).ready(function() {
+            $('.js-basic-example').DataTable( {
+                "dom": '<"toolbar">frtip'
+            } );
+         
+            $("div.toolbar").html('<a class="btn btn-info" href="#">Export Data</a>');
+        });
+    </script>
+        
 	
 @endsection
