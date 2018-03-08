@@ -13,7 +13,7 @@ class ReportController extends Controller
 {
     public function ideaDepartment()
     {
-    	$deparment = Department::where('status', 1);
+        $deparment = Department::where('status', 1);
         $ideas =  DB::table('ideas as i')
                     ->select(DB::raw('count(i.id) as ideas'))
                     ->addSelect('d.name as department')
@@ -42,6 +42,32 @@ class ReportController extends Controller
                
 
         return view ('backend.pages.report.departmentIdea', compact('numberOfIdea','percentageOfIdea'));
+    }
+
+    public function contributeDepartment()
+    {
+
+        $contributors =  DB::table('ideas as i')
+                    ->select(DB::raw('count(DISTINCT i.user_id) as contributor'))
+                    ->addSelect('d.name as department')
+                    ->join('users as u', 'u.id', '=', 'i.user_id')
+                    ->join('students as s', 'u.id', '=', 's.user_id')
+                    ->join('departments as d', 's.dep_id', '=', 'd.id')
+                    ->groupBy('s.dep_id')
+                    ->get();
+       
+        
+        $numberOfContributor = Charts::create('bar', 'highcharts')
+                ->title('Contributor of each Department')
+                ->elementLabel("Total Contributor")
+                ->labels($contributors->pluck('department'))
+                ->values($contributors->pluck('contributor'))
+                
+                ->responsive(false);
+
+               
+
+        return view ('backend.pages.report.departmentContributor', compact('numberOfContributor'));
     }
 
     public function anynomousIdea(){

@@ -166,7 +166,7 @@
             @if(checkPermission(['admin','qam']))
 
             
-            <li class="{!! Request::url() == route('reportIdeaDepartment') || Request::url() == route('anynomousIdea') || Request::url() == route('anynomousComment') ? 'active' : '' !!}">
+            <li class="{!! Request::url() == route('reportIdeaDepartment') || Request::url() == route('anynomousIdea') || Request::url() == route('anynomousComment') || Request::url() == route('reportContributeDepartment') ? 'active' : '' !!}">
        
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">pie_chart</i>
@@ -180,8 +180,8 @@
                         
                     </li>
                     
-                    <li class="{!! (Request::url() == route('reportIdeaDepartment')) ? 'active' : '' !!}">
-                        <a href="">
+                    <li class="{!! (Request::url() == route('reportContributeDepartment')) ? 'active' : '' !!}">
+                        <a href="{{ route('reportContributeDepartment') }}">
                             <span>Department-wise Contributors</span>
                         </a>
                         
