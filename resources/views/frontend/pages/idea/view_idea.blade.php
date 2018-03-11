@@ -1,6 +1,15 @@
 @extends ('frontend.layouts.master')
 
 @section('page_title', 'View Idea')
+
+@section('extra_css')
+    <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/icon.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/comment.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/form.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/button.min.css" rel="stylesheet">
+    <link href="{{ asset('/vendor/laravelLikeComment/css/style.css') }}" rel="stylesheet">
+@endsection
+
 @section('main_content')
 
     <div class="container">
@@ -40,7 +49,13 @@
                     <div class="postinfobot">
 
                         <div class="posted pull-left">
-                            <i class="fa fa-user-o"></i> {{ $idea->name }} &nbsp <i class="fa fa-clock-o"></i>  Posted on : {{ \Carbon\Carbon::parse($idea->start_date)->format('d M Y') }}</div>
+                            <i class="fa fa-user-o"></i> {{ $idea->name }} &nbsp <i class="fa fa-clock-o"></i>  Posted on : {{ \Carbon\Carbon::parse($idea->start_date)->format('d M Y') }}
+                        </div>
+                          <!-- Like / dislike -->
+                        <div class="likeblock pull-right" style="font-size: 20px;">
+                            @include('laravelLikeComment::like', ['like_item_id' => $idea->id])
+                        </div>
+                        <!-- Like / dislike -->
                         
                         @if($idea->topic->status != '3')
 
@@ -224,6 +239,14 @@
         </div>
     </div>
 
+    
+@endsection
+
+@section('extra_js')
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="{{ asset('/vendor/laravelLikeComment/js/script.js') }}" type="text/javascript"></script>
+        
     
 @endsection
 

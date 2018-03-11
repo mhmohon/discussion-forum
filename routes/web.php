@@ -48,6 +48,8 @@ Route::get('/forum/my-dashboard/', ['middleware'=>'check-role:student|staff','us
 
 Route::post('/forum/topic/search', 'HomeController@searchTopic')->name('topicSearch');
 
+Route::get('/forum/dashboard/download-idea&idea_id={id}', 'DashboardController@downloadPDF')->name('downloadPDF');
+
 Route::get('/', function () {
     return redirect()->route('home');
 });

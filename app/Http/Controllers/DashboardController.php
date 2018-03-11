@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Filesystem\Filesystem;
 use App\Idea;
+use App\Comment;
 use App\User;
 use App\Staff;
 use DB;
+use PDF;
 use Charts;
 
 class DashboardController extends Controller
@@ -117,5 +120,24 @@ class DashboardController extends Controller
     {
         auth()->user()->unreadNotifications->markAsRead();
         return redirect()->back();
+    }
+
+    public function downloadPDF($id)
+    {
+        $idea = Idea::find($id);
+        $comments = Comment::where('idea_id', $id)->paginate();
+        $pdf = PDF::loadView('view_idea', compact('idea','comments'))->save(public_path().'\download\my_stored_file.pdf');
+        
+        $files = glob(public_path('download/*'));
+
+        \Zipper::make(public_path('\download\test.zip'))->add($files)->close();
+        $zipName = public_path('\download\test.zip');
+
+        header("Content-type: application/octet-stream");
+        header("Content-Disposition: attachment; filename=\"".$zipName."\"");
+        readfile($zipName);
+        
+        $file = new Filesystem;
+        $file->cleanDirectory(public_path().'\download');
     }
 }

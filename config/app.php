@@ -165,7 +165,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         risul\LaravelLikeComment\LikeCommentServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
-        
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
+        'Chumper\Zipper\ZipperServiceProvider'
 
     ],
 
@@ -219,7 +220,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
-        
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
+        'Zipper' => 'Chumper\Zipper\Zipper'
 
     ],
 
